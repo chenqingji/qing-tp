@@ -1,0 +1,179 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body, .wrap-div {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #f8f8f6;
+}
+
+.top-div {
+  position: relative;
+  width: 100%;
+  height: 1.17333rem;
+  line-height: 1.17333rem;
+  background-color: #fff;
+  font-size: 0.42667rem;
+  color: #4A4A4A;
+  text-align: center;
+  border-bottom: 1px solid #DEDEDE;
+}
+.top-div .back-btn-icon {
+  position: absolute;
+  top: 50%;
+  left: 0.37333rem;
+  margin-top: -0.38667rem;
+  width: 0.77333rem;
+  height: 0.77333rem;
+}
+
+.content {
+  position: absolute;
+  top: 1.17333rem;
+  bottom: 1.6rem;
+  left: 0;
+  width: 100%;
+  overflow: auto;
+}
+
+.content-div {
+  width: 9.6rem;
+  /*height: pxToRem(472px);*/
+  margin: 0 auto;
+  padding-bottom: 0.89333rem;
+  border-radius: 0.10667rem;
+  background-color: #fff;
+  box-shadow: 0 0 0.21333rem #f1f1f1;
+}
+
+.second-wrap {
+  width: 8.74667rem;
+  margin-left: 0.50667rem;
+}
+
+.content-top-icon {
+  width: 9.6rem;
+  height: 0.10667rem;
+  margin: 0.26667rem auto 0;
+  background: url("/Public/Image/bian.png");
+  background-size: cover;
+}
+
+.order-num-div {
+  height: 1.14667rem;
+  font-size: 0.42667rem;
+  line-height: 1.14667rem;
+  border-bottom: 1px solid #eee;
+}
+.order-num-div span:nth-of-type(1) {
+  float: left;
+  text-align: left;
+}
+.order-num-div span:nth-of-type(2) {
+  float: right;
+  color: #9B9B9B;
+}
+
+.pay {
+  color: #20bd23 !important;
+}
+
+.unpay {
+  color: #ff2121 !important;
+}
+
+.order-info-div div:first-of-type, .order-addrees-div div:first-of-type {
+  margin-top: 0.26667rem !important;
+}
+.order-info-div div, .order-addrees-div div {
+  width: 100%;
+  float: left;
+  margin-top: 0.58667rem;
+}
+.order-info-div div span, .order-addrees-div div span {
+  font-size: 0.42667rem;
+}
+.order-info-div div span:nth-of-type(1), .order-addrees-div div span:nth-of-type(1) {
+  float: left;
+  color: #333;
+}
+.order-info-div div span:nth-of-type(2), .order-addrees-div div span:nth-of-type(2) {
+  float: right;
+  color: #666666;
+}
+.order-info-div div .address-span, .order-addrees-div div .address-span {
+  width: 5.33333rem;
+}
+
+.order-info-div div:last-of-type {
+  padding-bottom: 0.26667rem;
+  border-bottom: 1px solid #eee;
+}
+
+.order-addrees-div {
+  overflow: hidden;
+  clear: both;
+}
+.order-addrees-div .no-adress {
+  display: block;
+  clear: both;
+  overflow: hidden;
+  width: 1.06667rem;
+  height: 1.54667rem;
+  margin: 0.77333rem auto 0;
+}
+.order-addrees-div p {
+  text-align: center;
+}
+.order-addrees-div p:nth-of-type(1) {
+  font-size: 0.37333rem;
+  margin: 0.22667rem 0 0.22667rem;
+  color: #3E3E3E;
+}
+.order-addrees-div p:nth-of-type(2) {
+  font-size: 0.32rem;
+  color: #9B9B9B;
+}
+
+.red-span {
+  color: #f73232 !important;
+}
+
+.footer-div {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1.6rem;
+  background-color: #fff;
+  border-top: 1px solid #E4E4E4;
+}
+.footer-div div {
+  width: 2.50667rem;
+  height: 1.01333rem;
+  float: right;
+  margin: 0.26667rem 0.45333rem 0.32rem 0;
+  text-align: center;
+  line-height: 1.01333rem;
+  border-radius: 0.10667rem;
+  border: 1px solid #E4E4E4;
+  font-size: 0.42667rem;
+}
+.footer-div div a {
+  text-decoration: none;
+}
+.footer-div div:nth-of-type(1) {
+  border: none !important;
+  background-color: #54D175;
+}
+.footer-div div:nth-of-type(1) a {
+  color: #fff;
+}
+.footer-div div:nth-of-type(2) a {
+  color: #4A4A4A;
+}
+
+/*# sourceMappingURL=orderdetailex.css.map */

@@ -1,0 +1,270 @@
+@function pxToRem($px){   //$px为需要转换的字号
+  @return $px / 37.5px * 1rem; //37.5px为根字体大小
+}
+
+@function verticalCenter($px){
+  @return  -($px / 37.5px * 1rem) / 2;
+}
+
+$whiteColor:#fff;
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
+html,body{
+  position: relative;
+  background-color: #F2F2F2;
+}
+
+.wrap-div{
+  padding-top: pxToRem(45px);
+  padding-bottom: pxToRem(55px);
+}
+
+.bottom-btn{
+  $height: pxToRem(50px);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: $height;
+  font-size: pxToRem(18px);
+  background-color: #60A8FC;
+  line-height: $height;
+  text-align: center;
+  color: $whiteColor;
+}
+
+.top-nav-div{
+  position: fixed;
+  top: 0;
+  left: 0;
+  $height: pxToRem(40px);
+  width: 100%;
+  height: $height;
+  text-align: center;
+  background-color: $whiteColor;
+  box-shadow: 0 pxToRem(2px) pxToRem(2px) 0 #DEDEDE;
+  z-index: 1;
+  &>span{
+    display: block;
+    padding: pxToRem(12px) 0;
+    font-size: pxToRem(16px);
+    color: #4A4A4A;
+  }
+
+  &>a{
+    text-decoration: none;
+    color: #3A95FF;
+    &>span{
+      position: absolute;
+      top: pxToRem(12px);
+      right: pxToRem(14px);
+      font-size: pxToRem(12px);
+      &>img{
+        $width:pxToRem(18px);
+        width: $width;
+        height: $width;
+        margin-right: pxToRem(5px);
+        vertical-align: middle;
+      }
+    }
+  }
+
+}
+
+.banner-div{
+  position: relative;
+  width: pxToRem(375px);
+  height: pxToRem(48px);
+  font-size: pxToRem(16px);
+  color: #4A4A4A;
+  text-align: center;
+  line-height: pxToRem(48px);
+  background-color: $whiteColor;
+}
+
+.back-btn-icon{
+  position: absolute;
+  top: 50%;
+  left: pxToRem(14px);
+  margin-top: verticalCenter(29px);
+  width: pxToRem(29px);
+  height: pxToRem(29px);
+}
+
+
+
+.coupon-div{
+  width: pxToRem(349px);
+  height: pxToRem(130px);
+  background: url("/Public/Image/base/couponlist.png") no-repeat;
+  background-size: 100% 100%;
+  border-radius: pxToRem(3px);
+  margin: pxToRem(20px) auto 0;
+  //background-color: $whiteColor;
+  /*box-shadow: 0 pxToRem(1px) pxToRem(1px) 0 rgba(0, 0, 0, 0.12);*/
+}
+
+.left-div{
+  display: inline-block;
+  width: pxToRem(123px);
+  height: pxToRem(130px);
+  /*background: url("/Public/Image/base/couponlist-red.png") no-repeat;*/
+  background-size: 100% 100%;
+  font-size: pxToRem(30px);
+  color: #FF4242;
+  text-align: center;
+
+  div{
+    p:nth-of-type(1){
+      margin: pxToRem(43px) 0 pxToRem(19px) 0;
+      font-size: pxToRem(30px);
+    }
+
+    p:nth-of-type(2){
+      width: pxToRem(80px);
+      height: pxToRem(18px);
+      margin: 0 auto;
+      background-color: #FF4242;
+      font-size: pxToRem(12px);
+      color: #fff;
+      text-align: center;
+      line-height: pxToRem(18px);
+    }
+  }
+}
+
+.free-coupon {
+  .left-div{
+    div{
+      p:nth-of-type(1){
+        margin: pxToRem(43px) 0 pxToRem(19px) 0;
+      }
+    }
+  }
+}
+
+.not-free-coupon {
+  .left-div{
+    div{
+      p:nth-of-type(1){
+        font-size: pxToRem(50px);
+        font-weight: bold;
+        margin: pxToRem(27.5px) 0 pxToRem(2px) 0;
+      }
+      p:nth-of-type(1)::before{
+        content: '￥';
+        font-size: pxToRem(18px);
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.exc-date{
+  $fontColor:#CBCBCB !important;
+  $bgColor:#CCCCCC !important;
+  background: url("/Public/Image/base/couponlist-ex.png") no-repeat;
+  background-size: 100% 100%;
+  .left-div{
+    div{
+      color:$fontColor;
+      p:nth-of-type(1){
+        color:$fontColor;
+      }
+      p:nth-of-type(2){
+        background-color: $bgColor;
+        color: $whiteColor;
+      }
+      p:nth-of-type(2)::before{
+        background-color: $bgColor;
+      }
+    }
+  }
+  .right-div{
+    p{
+      color:$fontColor;
+    }
+
+    p:nth-of-type(2)::before,p:nth-of-type(3)::before{
+      background-color: #CBCBCB !important;
+    }
+  }
+}
+
+
+$rightWidth : pxToRem(349px) - pxToRem(123px);
+.right-div{
+  position: relative;
+  display: inline-block;
+  width: $rightWidth;
+  height: pxToRem(130px);
+
+  float: right;
+  p{
+    color: #4A4A4A;
+    padding-left: pxToRem(13.5px);
+  }
+  p:nth-of-type(1){
+    margin: pxToRem(30px) 0 pxToRem(11px) 0;
+    font-size: pxToRem(17px);
+  }
+  p:nth-of-type(2),p:nth-of-type(3){
+    font-size: pxToRem(12px);
+  }
+  p:nth-of-type(2){
+    margin: 0 0 pxToRem(7px) 0;
+  }
+}
+
+.right-div{
+  p:nth-of-type(2)::before,p:nth-of-type(3)::before{
+    content: '';
+    display: inline-block;
+    width: pxToRem(4px);
+    height: pxToRem(4px);
+    margin: 0 pxToRem(7px) 0 0; /* 13px*/
+    background-color: #4A4A4A;
+    border-radius: 50%;
+    vertical-align: middle;
+  }
+
+  .mark-icon{
+    $width:pxToRem(62px);
+    position: absolute;
+    top: pxToRem(8px);
+    right: pxToRem(7px);
+    width: $width;
+    height: $width;
+  }
+}
+
+.check-coupon-histroy{
+  margin-top: pxToRem(36px);
+  text-align: center;
+  font-size: pxToRem(12px);
+  img{
+    width: pxToRem(17.2px);
+    height: pxToRem(17.2px);
+    vertical-align: middle;
+  }
+  a{
+    color: rgba(155, 155, 155, 1);
+  }
+}
+
+.no-coupon {
+  margin-top: pxToRem(74px);
+  text-align: center;
+
+  img {
+    width: pxToRem(80px);
+    height: pxToRem(80px);
+  }
+  p {
+    font-size: pxToRem(14px);
+  }
+}

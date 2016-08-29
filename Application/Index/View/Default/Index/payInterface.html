@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta content="no-cache" http-equiv="Pragma">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <title>微信安全支付</title>
+</head>
+<body>
+<script language="javascript">
+    //当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+    document.addEventListener(
+            'WeixinJSBridgeReady',
+            function onBridgeReady() {
+                //公众号支付
+                WeixinJSBridge.invoke('getBrandWCPayRequest',
+                    {$jsApiParameters},
+                    function(res){
+                        isPaying = false;
+                        // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg 将在用户支付成功后返回 ok，但并不保证它绝对可靠。
+                        // 因此微信团队建议，当收到ok返回时，向商户后台询问是否收到交易成功的通知，若收到通知，前端展示交易成功的界面
+                        // 若此时未收到通知，商户后台主动调用查询订单接口，查询订单的当前状态，并反馈给前端展示相应的界面。
+                        switch (res["err_msg"]) {
+                            case "get_brand_wcpay_request:ok":
+                                // 锁定卷
+                                document.location.href = "{$successUrl}";
+                                break;
+                            case "get_brand_wcpay_request:cancel":
+                                document.location.href = "{$errorUrl}";
+                                break;
+                            default:
+                                alert("非常抱歉，支付订单失败了，请重新尝试一次.");
+                                document.location.href = "{$errorUrl}";
+                                break;
+                        }
+                    }
+                );
+            },
+            false);
+</script>
+<div style="display:none">
+    <script src="http://s4.cnzz.com/z_stat.php?id=1256866199&web_id=1256866199" language="JavaScript"></script>
+</div>
+</body>
+</html>

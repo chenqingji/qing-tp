@@ -1,0 +1,9 @@
+$baseFontSize:75px !default;
+
+@function pxToRem($px){
+  @return $px / $baseFontSize * 1rem;
+}
+
+@function verticalCenter($px){
+  @return  -($px / 37.5 * 1rem) / 2;
+}

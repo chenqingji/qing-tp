@@ -1,0 +1,145 @@
+{__NOLAYOUT__} 
+<!DOCTYPE html>
+<html lang="zh">
+        <head>
+                <meta charset="utf-8" />
+                <title>定制品入库 - 快印物流仓储系统</title>
+                <meta name="description"
+                      content="starry network" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <!--basic styles-->
+                <link href="/Public/css/wh/bootstrap.min.css" rel="stylesheet" />
+                <link rel="stylesheet" href="/Public/css/wh/font/css/font-awesome.min.css" />
+                <!--[if IE 7]>
+                            <link rel="stylesheet" href="/Public/css/wh/font/css/font-awesome-ie7.min.css" />
+                        <![endif]-->
+                <!--ace styles-->
+                <link rel="stylesheet" href="/Public/css/wh/jquery-ui-1.10.3.custom.min.css" />
+                <!--[if !IE]>-->
+                <script type="text/javascript">
+                        window.jQuery || document.write("<script src='/Public/js/wh/jquery-2.0.3.min.js'>" + "<" + "/script>");
+                </script>
+                <!--<![endif]-->
+                <!--[if IE]>
+                           <script type="text/javascript">
+                               window.jQuery || document.write("<script src='/Public/js/wh/jquery-1.10.2.min.js'>" + "<" + "/script>");
+                           </script>
+                    <![endif]-->
+
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        </head>
+        <body>
+                <div class="page-content">
+                        <div class="page-header position-relative">
+                                <h3>定制品入库</h3>
+                        </div>
+
+                        <div class="row">
+                                <div class="col-xs-12">    
+                                        <div id="custom_putin" class="form-horizontal">   
+                                                <div class="form-group">
+                                                        <!--<label class="col-sm-3 control-label no-padding-right" for="operator"> 员工 </label>-->
+                                                        <div class="col-sm-9">
+                                                                <input type="hidden" id="the_operator" name="operator" placeholder="员工识别" class="col-xs-10 col-sm-5" />
+                                                        </div>
+                                                </div>     
+                                                <div class="form-group">
+                                                        <label class="col-sm-3 control-label no-padding-right" for="product_id"> 商品编号 </label>
+                                                        <div class="col-sm-9">
+                                                                <input type="text" id="the_product_id" name="product_id" placeholder="商品编号识别" class="col-xs-10 col-sm-5" />
+                                                        </div>
+                                                </div>                                  
+                                        </div>
+                                                <div class="clearfix form-actions">
+                                                        <div class="col-md-offset-3 col-md-9">
+                                                                <button class="btn btn-info" id="add_btn" type="button">
+                                                                        <i class="icon-ok bigger-110"></i>
+                                                                        提交入库
+                                                                </button>
+                                                                &nbsp; &nbsp; &nbsp;
+                                                                <button class="btn" id="reset_btn" type="reset">
+                                                                        <i class="icon-undo bigger-110"></i>
+                                                                        清空退出
+                                                                </button>
+                                                        </div>
+                                                </div>
+                                                <div class="hr hr-24"></div>                                
+
+                                </div>
+                        </div>
+
+                </div>
+                <script type="text/javascript">
+                        window.jQuery || document.write("<script src='/Public/js/wh/jquery-2.0.3.min.js'>" + "<" + "/script>");
+                </script>
+                <!--basic scripts-->
+                <script src="/Public/js/wh/bootstrap.min.js"></script>
+                <!--page specific plugin scripts-->
+                <script src="/Public/js/wh/jquery-ui-1.10.3.custom.min.js"></script>                  
+                <!-- form validate -->
+<!--                <script src="/Public/js/wh/validate.js"></script>
+                <script src="/Public/js/wh/validata_message.js"></script>
+                <script src="/Public/js/wh/validata_metadata.js"></script>-->
+                <script src="/Public/js/wh/wh.js"></script>
+                <script>
+                        $(document).ready(function () {
+                                $("#the_operator").val("admin");
+                                $("#the_product_id").focus();
+//                                $("#the_operator").focus();    
+                                $("#add_btn").click(function () {
+                                        toPutIn();
+                                });
+                                $("#the_product_id").keyup(function(event){
+                                    if(event.keyCode == 13 || event.which == 13){
+                                        toPutIn();
+                                    }
+                                });                                
+                                $("#reset_btn").click(function () {
+                                        $("input").val('');
+                                });
+                        });
+//                        $("#custom_putin").validate({
+//                //                debug:true,
+//                                rules: {
+//                                        product_id: {
+//                                                required: true,
+//                                                minlength: 1,
+//                                                maxlength: 64
+//                                        },
+//                                        operator:{
+//                                                required:true,
+//                                                minlength:5
+//                                        }
+//                                }
+//                        });
+                        
+                        
+                        function toPutIn(){
+                                var operator = $("#the_operator").val();
+                                var product_id = $("#the_product_id").val();
+                                if($.trim(operator)=='' || $.trim(product_id)==''){
+                                        $("div.row").fn_tips("warning", "exclamation", "商品编号或工号不能为空",0);
+                                        return false;
+                                }
+                                $.ajax({
+                                        type:'post',
+                                        url:'/Warehouse/Custom/toPutIn',
+                                        data:'operator='+operator+'&product_id='+product_id,
+                                        dataType:'json',
+                                        error:function(res){
+                                                $("div.row").fn_tips("warning", "exclamation", "请求失败，请重新操作或联系管理员",0);
+                                                return false;                                                
+                                        },
+                                        success:function(res){
+                                                if (res.status === 0){
+                                                        $("div.row").fn_tips("warning", "exclamation", res.data,0);
+                                                } else if (res.status === 1){
+                                                        $("div.row").fn_tips("success", "ok", res.data,0);
+                                                }                                                
+                                                return true;
+                                        }
+                                });
+                        }
+                </script>
+        </body>
+</html>

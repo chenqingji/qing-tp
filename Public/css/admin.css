@@ -1,0 +1,89 @@
+body {
+    background: #fff;
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+
+html {
+    font-size : 20px;
+    font-family: "黑体", arial, helvetica, sans-serif;
+}
+@media only screen and (min-width: 401px){
+    html {
+        font-size: 25px !important;
+    }
+}
+@media only screen and (min-width: 428px){
+    html {
+        font-size: 26.75px !important;
+    }
+}
+@media only screen and (min-width: 481px){
+    html {
+        font-size: 30px !important;
+    }
+}
+@media only screen and (min-width: 569px){
+    html {
+        font-size: 35px !important;
+    }
+}
+@media only screen and (min-width: 641px){
+    html {
+        font-size: 40px !important;
+    }
+}
+
+.wx-header {
+    width: 1rem;
+    height: 1rem;
+}
+
+.main {
+    width:98%;
+    margin: 20px auto;
+}
+
+.table {
+    border: solid 1px #ddd;
+}
+
+.search {
+    margin-bottom: 15px;
+}
+
+.table>thead>tr>th,
+.table>tbody>tr>td{
+    text-align: center;
+    vertical-align: middle;
+}
+
+.order-detail {
+    display: none;
+}
+
+.modal {
+    background-color: rgba(0,0,0,.8);
+}
+
+.download-url {
+    word-break: break-all;
+}
+
+#urlList {
+    max-height: 450px;
+    overflow: auto;
+}
+
+#searchCondition select {
+    width: auto;
+    display: inline;
+    margin-right: 10px;
+}
+
+#address select {
+    width: auto;
+    display: inline;
+    max-width: 4.5rem;
+}

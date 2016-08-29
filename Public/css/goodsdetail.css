@@ -1,0 +1,110 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+.div-wrap {
+  position: fixed;
+  top: 0;
+  bottom: 1.33333rem;
+  width: 100%;
+  overflow-y: scroll;
+  box-sizing: border-box;
+  padding: 0.2rem 0.46667rem 0;
+}
+
+.preview-div > img {
+  width: 9.06667rem;
+  height: 4.73333rem;
+}
+
+.title-div {
+  width: 6.46667rem;
+  font-size: 0.53333rem;
+  color: #4A4A4A;
+}
+
+.price-div {
+  margin-top: 0.2rem;
+  clear: right;
+  overflow: hidden;
+}
+.price-div .original-price-p {
+  margin-bottom: 0.09333rem;
+  font-size: 0.42667rem;
+  color: #9B9B9B;
+  text-decoration: line-through;
+}
+.price-div .cost-price-div {
+  overflow: hidden;
+}
+.price-div .cost-price-div .cost-price-span {
+  float: left;
+  font-size: 0.53333rem;
+  color: #FF0000;
+}
+.price-div .cost-price-div .add-goods-div {
+  height: 0.73333rem;
+  line-height: 0.73333rem;
+  display: inline-block;
+  float: right;
+}
+.price-div .cost-price-div .add-goods-div .goods-num-span {
+  font-size: 0.53333rem;
+  color: #574000;
+  vertical-align: bottom;
+}
+.price-div .cost-price-div .add-goods-div .choose-goods-icon {
+  width: 0.73333rem;
+  height: 0.73333rem;
+}
+
+.size-div {
+  font-size: 0.45333rem;
+  color: #9B9B9B;
+}
+
+.buy-btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1.33333rem;
+  margin: 0 auto 0;
+  background-color: #FEBF0E;
+  font-size: 0.53333rem;
+  color: #574000;
+  text-align: center;
+  line-height: 1.33333rem;
+  border-radius: 0.13333rem;
+}
+
+.goods-des-div {
+  margin: 0.13333rem auto;
+}
+
+/** swiper ****/
+.swiper-slide {
+  width: 1.53333rem !important;
+  height: 1.53333rem !important;
+  margin-top: 0.33333rem;
+  margin-bottom: 0.46667rem;
+  margin-right: 0.2rem !important;
+  border-radius: 0.10667rem;
+  border: 0.06667rem solid #fff !important;
+}
+.swiper-slide > img {
+  width: 1.53333rem;
+  height: 1.53333rem;
+}
+
+.selected-style {
+  border: 0.06667rem solid #FF8300 !important;
+}
+
+/*# sourceMappingURL=goodsdetail.css.map */

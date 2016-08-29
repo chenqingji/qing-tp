@@ -1,0 +1,224 @@
+.bottom-nav {
+  position: fixed;
+  bottom: 0px;
+  height: 1.30667rem;
+  left: 0px;
+  width: 100%;
+  clear: both;
+  border-top: solid 1px #E4E4E4;
+  background-color: #fff;
+  overflow: hidden;
+  clear: both;
+}
+.bottom-nav a {
+  height: 1.30667rem;
+  font-size: 0.32rem;
+  text-decoration: none;
+  color: #9B9B9B;
+  text-align: center;
+  line-height: 2.00667rem;
+}
+.bottom-nav div {
+  position: relative;
+  width: 33%;
+  float: left;
+  text-align: center;
+}
+.bottom-nav div.active {
+  color: #3A95FF;
+}
+.bottom-nav div:before {
+  position: absolute;
+  top: .1rem;
+  left: 50%;
+  margin-left: -0.35rem;
+  height: 0.66667rem;
+  width: 0.66667rem;
+  background-repeat: no-repeat;
+  background-size: 0.66667rem;
+  content: "";
+}
+.bottom-nav .home:before {
+  background-image: url("/Public/Image/home.png");
+}
+.bottom-nav .list:before {
+  background-image: url("/Public/Image/list.png");
+}
+.bottom-nav .custom:before {
+  background-image: url("/Public/Image/custom.png");
+}
+.bottom-nav .active.home:before {
+  background-image: url("/Public/Image/home-hover.png");
+}
+.bottom-nav .active.list:before {
+  background-image: url("/Public/Image/list-hover.png");
+}
+.bottom-nav .active.custom:before {
+  background-image: url("/Public/Image/custom-hover.png");
+}
+
+.swiper-container-horizontal > .swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
+  bottom: 0;
+}
+
+.swiper-pagination-bullet {
+  width: 0.13333rem;
+  height: 0.13333rem;
+}
+
+.nav {
+  position: fixed;
+  top: 0px;
+  height: 1.28rem;
+  left: 0px;
+  width: 100%;
+  clear: both;
+}
+.nav .logo {
+  float: left;
+  width: 2.688rem;
+  height: 0.8512rem;
+  margin: 0.21333rem 0 0 0.42667rem;
+}
+.nav .txt {
+  width: 2.02667rem;
+  height: 0.74667rem;
+  float: right;
+  border-radius: 1.14667rem;
+  border: solid 1px #5BA6FF !important;
+  color: #5BA6FF;
+  text-align: center;
+  line-height: 0.74667rem;
+  /*padding: pxToRem(8px) pxToRem(20px);*/
+  margin: 0.26667rem 0.58667rem 0 0;
+  font-size: 0.42667rem;
+}
+.nav .txt .cnt {
+  position: absolute;
+  top: 0.13333rem;
+  right: 0.45333rem;
+  /*margin: {px};*/
+  width: 0.50667rem;
+  height: 0.50667rem;
+  color: white;
+  text-align: center;
+  line-height: 0.50667rem;
+  background-color: #FA3D3E;
+  /*padding: pxToRem(2px) pxToRem(5px);*/
+  border-radius: 50%;
+  font-size: 0.37333rem;
+}
+
+.banner {
+  position: fixed;
+  top: 1.28rem;
+  bottom: 1.30667rem;
+  left: 0;
+  width: 100%;
+}
+.banner .btn {
+  height: 10%;
+  text-align: center;
+  font-size: 0.48rem;
+}
+.banner .btn a {
+  /*padding: pxToRem(10px) pxToRem(56px);*/
+  display: inline-block;
+  width: 5.33333rem;
+  height: 1.06667rem;
+  text-align: center;
+  line-height: 1.06667rem;
+  margin-top: 0.4rem;
+  border: solid 1px #3B95FF;
+  color: #3B95FF;
+  display: inline-block;
+  border-radius: 2.13333rem;
+  text-decoration: none;
+}
+.banner .swiper-container {
+  height: 85%;
+  width: 100%;
+}
+.banner .swiper-container .swiper-slide {
+  text-align: center;
+  background: #fff;
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.banner .swiper-container .swiper-slide a, .banner .swiper-container .swiper-slide img {
+  width: 100%;
+  height: 100%;
+}
+
+/*
+.bottom-nav {
+  position: fixed;
+  bottom: 0px;
+  height: $bottomH;
+  left: 0px;
+  width: 100%;
+  clear: both;
+  border-top: solid pxToRem(1px) #E4E4E4;
+  overflow: hidden;
+  clear: both;
+  div {
+    position: relative;
+    width: 33%;
+    float: left;
+    text-align: center;
+    a {
+      display: block;
+      height: $bottomH;
+      font-size: pxToRem(10px);
+      text-decoration: none;
+      color: #9B9B9B;
+      text-align: center;
+      line-height: $bottomH + 0.7;
+    }
+    &.active a {
+      color: #3A95FF;
+    }
+
+    &:before{
+      position: absolute;
+      top: -12%;
+      left: 50%;
+      margin-left: -10%;
+      height: pxToRem(22.5px);
+      display: block;
+      !*margin: pxToRem(6px);*!
+    }
+  }
+
+  .home:before{
+    content: url("/Public/Image/home.png");
+  }
+  .list:before{
+    content: url("/Public/Image/list.png");
+  }
+  .custom:before{
+    content: url("/Public/Image/custom.png");
+  }
+  .active.home:before{
+    content: url("/Public/Image/home-hover.png");
+  }
+  .active.list:before{
+    content: url("/Public/Image/list-hover.png");
+  }
+  .active.custom:before{
+    content: url("/Public/Image/custom-hover.png");
+  }
+}*/
+
+/*# sourceMappingURL=navigation.css.map */

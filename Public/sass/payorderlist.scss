@@ -1,0 +1,228 @@
+$baseFontSize:37.5px;
+$whiteColor:#fff;
+
+@function pxToRem ($px){
+  @return $px / $baseFontSize * 1rem;
+}
+
+@import "footernav";
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
+html,body{
+  position: relative;
+  width: 100%;
+  background-color: #F2F2F2;
+}
+
+$topHeight: pxToRem(48px);
+.top-div{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $topHeight;
+  background-color: #FFFFFF;
+  overflow: hidden;
+  clear: both;
+  div{
+    $height: pxToRem(30px);
+    width: pxToRem(160px);
+    height: $height;
+    border: 1px solid #3A95FF;
+    border-radius: pxToRem(4px);
+    margin: pxToRem(9px) auto 0;
+    span{
+      display: inline-block;
+      width: 50.001%;
+      height: $height;
+      float: left;
+      font-size: pxToRem(14px);
+      color: #3A95FF;
+      text-align: center;
+      line-height: $height;
+    }
+  }
+}
+
+//.top-div{
+//  position: relative;
+//  width: pxToRem(375px);
+//  height: pxToRem(44px);
+//  background-color: $whiteColor;
+//  div{
+//    position: relative;
+//    display: inline-block;
+//    width: 50%;
+//    height: pxToRem(44px);;
+//    float: left;
+//    text-align: center;
+//    span{
+//      display: inline-block;
+//      width: pxToRem(100px);
+//      height:pxToRem(28px);
+//      line-height: pxToRem(28px);
+//      font-size: pxToRem(14px);
+//      color: #4A4A4A;
+//      text-align: center;
+//      clear: both;
+//      overflow: hidden;
+//      position: absolute;
+//      top: 50%;
+//      left: 50%;
+//      margin-top: -(pxToRem(28px) / 2);
+//      margin-left: -(pxToRem(100px) / 2);
+//    }
+//  }
+//}
+
+.active-style{
+  color: #fff !important;
+  background-color: #3A95FF;
+  border: #3A95FF;
+}
+
+.coupon-list-div{
+  width: pxToRem(375px);
+  background-color: $whiteColor;
+  background-color: #F2F2F2;
+  padding-bottom: $bottomH + pxToRem(6px);
+  padding-top: $topHeight;
+  /*box-shadow: 0 pxToRem(1px) pxToRem(1px) 0 rgba(0, 0, 0, 0.1);*/
+  .coupon-div{
+    margin: pxToRem(8px) 0 0 0;
+    background-color: $whiteColor;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+  }
+}
+
+.order-num-div{
+  height: pxToRem(37px);
+  line-height: pxToRem(37px);
+  font-size: pxToRem(14px);
+  color: #666666;
+  border-bottom: 1px solid #eee;
+  span{
+    margin-left: pxToRem(16px);
+  }
+}
+
+.left-div,.right-div{
+  height: pxToRem(102px);
+  float: left;
+  margin-top: pxToRem(11px);
+  border-bottom:  1px solid #eee;
+}
+.left-div{
+  display: inline-block;
+  width: pxToRem(100px);
+  margin-left: pxToRem(16px);;
+  img{
+    width: pxToRem(80px);
+    height: pxToRem(80px);
+    border-radius: pxToRem(4px);
+  }
+}
+
+.right-div{
+  width: pxToRem(362px) - pxToRem(120px);
+  text-align: left;
+  p:nth-of-type(1){
+    font-size: pxToRem(16px);
+    color: #000;
+  }
+  p:nth-of-type(2){
+    font-size: pxToRem(14px);
+    color: #4A4A4A;
+    margin: pxToRem(9px) 0 pxToRem(21px) 0;
+    span{
+      color: #ff4e4e;
+    }
+  }
+  p:nth-of-type(3){
+    font-size: pxToRem(14px);
+    color: #9B9B9B;
+  }
+}
+
+.btn-style{
+  width: pxToRem(94px);
+  height: pxToRem(38px);
+  float: right;
+  margin: pxToRem(9px) pxToRem(10px) pxToRem(10px) 0;
+  font-size: pxToRem(16px);
+  text-align: center;
+  line-height: pxToRem(38px);
+  border-radius: pxToRem(4px);
+}
+
+.button-div{
+  overflow: hidden;
+  clear: both;
+  span{
+    margin-left: pxToRem(16px);
+    font-size: pxToRem(13px);
+    color: #9B9B9B;
+    clear: both;
+    overflow: hidden;
+  }
+  a{
+    text-decoration: none;
+    color: #fff;
+  }
+}
+.order-info{
+  @extend .btn-style;
+  border: 1px solid #E4E4E4;
+  color: #4A4A4A;
+}
+
+.pay-btn{
+  @extend .btn-style;
+  color: #fff;
+  background-color: #54D175;
+}
+
+.logistics-info{
+  @extend .btn-style;
+  a{
+    color: #fff;
+  }
+  background-color: #F0C04D;
+}
+
+/**  没订单  *************************************************************/
+
+.no-data-div{
+  height: 100%;
+  border: none;
+  .no-data-div-word{
+    text-align: center;
+    font-size: pxToRem(14px);
+    color: #9B9B9B;
+    margin: pxToRem(93px) 0 pxToRem(15px) 0;
+  }
+  img{
+    display: block;
+    width: pxToRem(92px);
+    height: pxToRem(120px);
+    margin: 0 auto pxToRem(78px);
+  }
+  .select-pic-btn{
+    width: pxToRem(180px);
+    height: pxToRem(40px);
+    border: 1px solid #0076FF;
+    font-size: pxToRem(16px);
+    text-align: center;
+    line-height: pxToRem(40px);
+    margin: 0 auto;
+    border-radius: pxToRem(100px);
+    a{
+      text-decoration: none;
+      color: #0076FE;
+    }
+  }
+}

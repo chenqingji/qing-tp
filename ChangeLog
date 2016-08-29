@@ -1,0 +1,78 @@
+
+##20160829 jerry 增加用户权限系统初始数据
+
+USE `kuaiyin`;
+
+/*Table structure for table `wh_auth_group` */
+
+DROP TABLE IF EXISTS `wh_auth_group`;
+
+CREATE TABLE `wh_auth_group` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `title` char(100) NOT NULL DEFAULT '' COMMENT '组名',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
+  `rules` text NOT NULL COMMENT '规则id',
+  `create_time` int(10) NOT NULL DEFAULT '0',
+  `update_time` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='用户组表';
+
+/*Data for the table `wh_auth_group` */
+
+insert  into `wh_auth_group`(`id`,`title`,`status`,`rules`,`create_time`,`update_time`) values (3,'禁用组',0,'',1472128136,1472375556),(5,'普通管理员',1,'1,25,26,27,28,2,6,24,3,4,5,7,8,9,54,55,56,57,58,59,60,61,62,63,64,10,13,11,14,15,16,17,12,18,19,20,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,21,22,23,29,30,31,32,33,34',1472182884,1472373371);
+
+DROP TABLE IF EXISTS `wh_auth_rule`;
+
+CREATE TABLE `wh_auth_rule` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '父级id',
+  `name` char(80) NOT NULL DEFAULT '' COMMENT '规则唯一标识',
+  `title` char(20) NOT NULL DEFAULT '' COMMENT '规则中文名称',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态：为1正常，为0禁用',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `condition` char(100) NOT NULL DEFAULT '' COMMENT '规则表达式，为空表示存在就验证，不为空表示按照条件验证',
+  `create_time` int(10) NOT NULL DEFAULT '0',
+  `update_time` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8 COMMENT='规则表';
+
+/*Data for the table `wh_auth_rule` */
+
+insert  into `wh_auth_rule`(`id`,`pid`,`name`,`title`,`status`,`type`,`condition`,`create_time`,`update_time`) values (1,0,'Warehouse/Admin','管理模块',1,1,'',1472116719,1472189457),(2,0,'Warehouse/Zone','仓储区域',1,1,'',1472128191,1472193881),(3,0,'Warehouse/Order','订单中心',1,1,'',1472128242,1472128249),(4,3,'Warehouse/Order/index','订单列表',1,1,'',1472128287,1472128287),(5,3,'Warehouse/Order/products','订单商品列表',1,1,'',1472128470,1472128481),(6,2,'Warehouse/Zone/index','仓储区域列表',1,1,'',1472128506,1472193968),(7,3,'Warehouse/Order/addNormal','添加普通订单',1,1,'',1472128581,1472128581),(8,3,'Warehouse/Order/addCustom','添加定制品订单',1,1,'',1472128600,1472128600),(9,3,'Warehouse/Import/import','导入第三方订单',1,1,'',1472128616,1472128616),(10,0,'Warehouse/Custom','定制品仓储',1,1,'',1472182409,1472182409),(11,0,'Warehouse/Oplog','操作记录管理',0,1,'',1472182447,1472195403),(12,0,'Warehouse/Authuser','系统用户管理',1,1,'',1472182467,1472182467),(13,10,'Warehouse/Custom/index','在仓库定制品列表',1,1,'',1472182529,1472182529),(14,11,'Warehouse/Oplog/inRecord','入库记录',0,1,'',1472182547,1472182547),(15,11,'Warehouse/Picking/lists','拣货单列表',0,1,'',1472182561,1472182593),(16,11,'Warehouse/Oplog/outRecord','出库记录',0,1,'',1472182607,1472182607),(17,11,'Warehouse/Express/packages','包裹列表',0,1,'',1472182622,1472182622),(18,12,'Warehouse/Authuser/index','用户列表',1,1,'',1472182639,1472182639),(19,12,'Warehouse/Authgroup/index','用户组列表',1,1,'',1472182656,1472182656),(20,12,'Warehouse/Authrule/index','权限规则列表',1,1,'',1472182687,1472182687),(21,0,'Warehouse/Category','品类管理',1,1,'',1472182736,1472182736),(22,21,'Warehouse/Category/index','普通品类列表',1,1,'',1472182766,1472182766),(23,21,'Warehouse/Category/add','添加普通品类',1,1,'',1472182781,1472182781),(24,2,'Warehouse/Zone/add','添加仓储区域',1,1,'',1472182824,1472182824),(25,1,'Warehouse/Admin/login','登录页面',1,1,'',1472189326,1472189326),(26,1,'Warehouse/Admin/tologin','登录操作',1,1,'',1472189370,1472189370),(27,1,'Warehouse/Admin/logout','登出',1,1,'',1472189429,1472189429),(28,1,'Warehouse/admin/index','登录跳转首页',1,1,'',1472189448,1472189448),(29,21,'Warehouse/Category/getListData','获取品类数据',1,1,'',1472192189,1472192292),(30,21,'Warehouse/Category/getShelfs','获取货架数据',1,1,'',1472192232,1472192279),(31,21,'Warehouse/Category/operation','品类操作管理',1,1,'',1472192264,1472192286),(32,21,'Warehouse/Category/toAdd','品类新增操作',1,1,'',1472192365,1472192365),(33,21,'Warehouse/Category/toEdit','品类编辑操作',1,1,'',1472192386,1472192386),(34,21,'Warehouse/Category/toSetLine','品类上下架',1,1,'',1472192419,1472192419),(35,12,'Warehouse/Authuser/getListData','获取用户数据',1,1,'',1472192563,1472192563),(36,12,'Warehouse/Authuser/operation','用户管理操作',1,1,'',1472192596,1472192596),(37,12,'Warehouse/Authuser/toAdd','添加用户',1,1,'',1472192628,1472192628),(38,12,'Warehouse/Authuser/toEdit','编辑用户',1,1,'',1472192647,1472192647),(39,12,'Warehouse/Auth/toDelete','删除用户',1,1,'',1472192672,1472192672),(40,12,'Warehouse/Authgroup/getListData','用户组数据获取',1,1,'',1472192723,1472192723),(41,12,'Warehouse/Authgroup/operation','用户组操作管理',1,1,'',1472192753,1472192753),(42,12,'Warehouse/Authgroup/toAdd','添加用户组',1,1,'',1472192780,1472192780),(43,12,'Warehouse/Authgroup/toEdit','编辑用户组',1,1,'',1472192806,1472192806),(44,12,'Warehouse/Authgroup/toDelete','删除用户组',1,1,'',1472192835,1472192835),(45,12,'Warehouse/Authgroup/getSelectData','获取下拉框数据',1,1,'',1472192876,1472192876),(46,12,'Warehouse/Authgroup/getAllRules','权限列表',1,1,'',1472192916,1472192916),(47,12,'Warehouse/Authgroup/updateRules','更新用户组权限',1,1,'',1472192947,1472192947),(48,12,'Warehouse/Authrule/getListData','获取权限规则数据',1,1,'',1472193007,1472193007),(49,12,'Warehouse/Authrule/operation','权限规则管理操作',1,1,'',1472193037,1472193037),(50,12,'Warehouse/Authrule/toAdd','添加权限规则',1,1,'',1472193061,1472193061),(51,12,'Warehouse/Authrule/toEdit','编辑权限规则',1,1,'',1472193086,1472193086),(52,12,'Warehouse/Authrule/toDelete','删除权限规则',1,1,'',1472193115,1472193115),(53,12,'Warehouse/Authrule/getSelectData','获取规则状态',1,1,'',1472193154,1472193154),(54,3,'Warehouse/Order/getListData','获取订单数据',1,1,'',1472195558,1472195558),(55,3,'Warehouse/Order/orderOperation','订单管理操作',1,1,'',1472195604,1472195604),(56,3,'Warehouse/Order/toEditOrder','修改订单信息',1,1,'',1472195627,1472195627),(57,3,'Warehouse/Order/getSelectData','获取订单下拉框数据',1,1,'',1472195666,1472195666),(58,3,'Warehouse/Order/getOrderProducts','查看订单商品信息',1,1,'',1472195705,1472195705),(59,3,'Warehouse/Order/getProductListData','获取订单商品数据',1,1,'',1472195758,1472195758),(60,3,'Warehouse/Order/productOperation','订单商品管理操作',1,1,'',1472195782,1472195782),(61,3,'Warehouse/Order/resetProduct','重置商品',1,1,'',1472195799,1472195799),(62,3,'Warehouse/Order/toAddNormal','添加普通订单数据',1,1,'',1472195842,1472195842),(63,3,'Warehouse/Order/cancelProduct','取消商品',1,1,'',1472370494,1472370494),(64,3,'Warehouse/Order/cancelOrder','取消订单',1,1,'',1472373362,1472373362);
+
+
+DROP TABLE IF EXISTS `wh_auth_user`;
+
+CREATE TABLE `wh_auth_user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `uid` varchar(64) NOT NULL DEFAULT '' COMMENT '用户id',
+  `pwd` char(32) NOT NULL DEFAULT '' COMMENT 'pwd',
+  `salt` char(8) NOT NULL DEFAULT '' COMMENT 'salt',
+  `type` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '类型',
+  `nickname` varchar(30) NOT NULL DEFAULT '' COMMENT '第三方昵称',
+  `head_img` varchar(255) NOT NULL DEFAULT '' COMMENT '头像',
+  `openid` varchar(40) NOT NULL DEFAULT '' COMMENT '第三方用户id',
+  `access_token` varchar(255) NOT NULL DEFAULT '' COMMENT 'access_token token',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='用户表';
+
+/*Data for the table `wh_auth_user` */
+
+insert  into `wh_auth_user`(`id`,`uid`,`pwd`,`salt`,`type`,`nickname`,`head_img`,`openid`,`access_token`,`create_time`,`update_time`) values (4,'admin','770297c4d77312fc75b21732c63ad725','Aw39MN',1,'admin管理员','','21232f297a57a5a743894a0e4a801fc3','',1472182873,1472376590),(5,'starryadmin','203569d78d97be3019c659226ec43ccc','tsing',1,'超级管理员','','7a99c5ad1021edac56e3adc6bea71598','',1472195957,1472195957);
+
+DROP TABLE IF EXISTS `wh_auth_user_group`;
+
+CREATE TABLE `wh_auth_user_group` (
+  `uid` varchar(64) NOT NULL COMMENT '用户id',
+  `group_id` int(11) unsigned NOT NULL COMMENT '用户组id',
+  UNIQUE KEY `uid_group_id` (`uid`,`group_id`),
+  KEY `uid` (`uid`),
+  KEY `group_id` (`group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户组关联表';
+
+/*Data for the table `wh_auth_user_group` */
+
+insert  into `wh_auth_user_group`(`uid`,`group_id`) values ('admin',5);

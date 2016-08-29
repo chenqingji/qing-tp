@@ -1,0 +1,51 @@
+{__NOLAYOUT__} 
+<div id='normal_info_div' style="margin-top: 20px;">                      
+        <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="category_name"> 品类名称： </label>
+                <div class="col-sm-9">
+                        <label>{$data['category_name']}</label>
+                </div>
+        </div>
+        <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="category_price"> 品类单价(元)： </label>
+                <div class="col-sm-9">
+                        <label>{$data['unit_price']}</label>
+                </div>
+        </div>
+        <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="category_weight"> 品类重量(克)： </label>
+                <div class="col-sm-9">
+                        <label>{$data['weight']}</label>
+                </div>
+        </div>  
+        <div class="form-group"  style="color: red;">
+                <label class="col-sm-3 control-label no-padding-right" for="category_shelf"> 货架编号： </label>
+                <div class="col-sm-9">
+                        <h3>{$data['shelf_no']}</h3>
+                </div>
+        </div>                        
+        <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="category_start"> 仓储起始位置： </label>
+                <div class="col-sm-9">
+                        <label>{$data['zone_start']}</label>
+                </div>
+        </div>
+        <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="category_cur"> 现有库存： </label>
+                <div class="col-sm-9">
+                        <label>{$data['cur_count']}</label>
+                </div>
+        </div>        
+        <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="category_max"> 最大库存： </label>
+                <div class="col-sm-9">
+                        <label>{$data['max_count']}</label>
+                </div>
+        </div>
+        <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="category_desc"> 品类说明： </label>
+                <div class="col-sm-9">
+                        <label>{$data['desc']|default=''}</label>
+                </div>
+        </div>  
+</div>        

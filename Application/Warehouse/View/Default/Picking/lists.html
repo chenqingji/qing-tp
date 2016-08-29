@@ -1,0 +1,53 @@
+<div class="page-content">
+        <div class="page-header position-relative">
+                <h1>列表</h1>
+        </div>
+
+        <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="row">
+                        <div class="col-xs-12">
+                                <div class="table-responsive">
+                                        <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                                                <thead>
+                                                        <tr>
+                                                                <th>Id</th>
+                                                                <th>操作用户id</th>
+                                                                <th>拣货单号</th>
+                                                                <th>订单号</th>
+                                                                <th class="hidden-480">
+                                                                        <i class="icon-time bigger-110 hidden-480"></i>
+                                                                        创建时间
+                                                                </th>                                                                
+                                                                <th class="hidden-480">
+                                                                        <i class="icon-time bigger-110 hidden-480"></i>
+                                                                        更新时间
+                                                                </th>
+
+                                                        </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                <foreach name="data" item="one" key="no">    
+                                                        <tr>
+                                                                <td>
+                                                                        {$one['id']}
+                                                                </td>
+                                                                <td>{$one['op_userid']}</td>
+                                                                <td>{$one['pick_id']}</td>
+                                                                <td  class="hidden-480">{$one['orderno']}</td>
+                                                                <td class="hidden-480">
+                                                                        {$one['create_time']|date="Y-m-d H:i:s",###}
+                                                                </td>
+                                                                <td class="hidden-480">
+                                                                        {$one['update_time']|date="Y-m-d H:i:s",###}
+                                                                </td>                                                                
+                                                        </tr>
+                                                </foreach>
+                                                </tbody>
+                                        </table>
+                                </div><!-- /.table-responsive -->
+                        </div>                  
+                </div>
+        </div>
+</div>

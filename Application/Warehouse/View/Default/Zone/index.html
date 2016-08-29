@@ -1,0 +1,58 @@
+<style>
+        .thWidth{
+                max-width: 120px !important;
+                width: 320px;
+
+        }
+
+        .apadding{
+                padding-right: 20px;
+        }
+</style>
+<div class="page-content">
+        <div class="page-header position-relative">
+                <h1>仓储区域列表</h1>
+        </div>
+
+        <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="row">
+                        <div class="col-sm-6">
+                                <h3 class="header smaller lighter green">普通商品区</h3>                                
+                                <div class="dd" id="normal_nestable">
+                                        <ol class="dd-list">
+                                                <foreach name="normal" item="one" key="no">    
+                                                        <li class="dd-item" data-id="1">
+                                                                <div class="dd-handle">货架编号：{$no}   货架层：{$one['rows']|implode='、',###}  每层格子数：{$one['col']}</div>
+                                                        </li>
+                                                </foreach>                                                
+                                        </ol>
+
+                                </div>
+                        </div>
+                        <div class="col-sm-6">
+                                <h3 class="header smaller lighter green">定制品区</h3>                                
+                                <div class="dd" id="custom_nestable">
+                                        <ol class="dd-list">
+                                                <foreach name="custom" item="one" key="no">    
+                                                        <li class="dd-item" data-id="2">
+                                                                <div class="dd-handle">货架编号：{$no}   货架层：{$one['rows']|implode='、',###}  每层格子数：{$one['col']}</div>
+                                                        </li>
+                                                </foreach>                                                
+                                        </ol>                                        
+                                </div>
+                        </div>                        
+                </div>
+        </div>
+</div>
+<script src="/Public/js/wh/jquery.nestable.min.js"></script>
+<script type="text/javascript">
+        jQuery(function ($) {
+                $('.dd').nestable();
+                $('.dd-handle a').on('mousedown', function (e) {
+                        e.stopPropagation();
+                });
+                $('[data-rel="tooltip"]').tooltip();
+                
+        });
+</script>

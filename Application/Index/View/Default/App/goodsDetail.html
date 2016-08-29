@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="x-rim-auto-match" content="none">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta content="no-cache" http-equiv="Pragma">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <script src="/Public/js/rem.js?v={$static_v}"></script>
+    <link rel="stylesheet" href="/Public/css/goodsdetail.css?v={$static_v}">
+    <link rel="stylesheet" href="/Public/css/swiper.min.css">
+    <title>商品详情</title>
+    <style>
+        html, body {
+            position: relative;
+            height: 100%;
+        }
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+        }
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="div-wrap">
+        <div class="container-div">
+            <div class="preview-div">
+                <img class="preview-img" src="{$data['bannerImgArry'][0]}" alt="">
+            </div>
+            <div class="thumbnail-div">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <!--selected-style-->
+                        <foreach name="data.bannerImgArry" item="banerImg" key="k">
+                            <div class="swiper-slide <if condition="($k eq 0)">selected-style</if>">
+                                <img src="{$banerImg}" alt="">
+                            </div>
+                        </foreach>
+                    </div>
+
+                </div>
+            </div>
+            <div class="title-div">{$data.title}</div>
+            <div class="price-div">
+                <p class="original-price-p">原价：￥{$data.originalPrice}</p>
+                <div class="cost-price-div">
+                    <span class="cost-price-span">￥{$data.price}</span>
+                    <div class="add-goods-div">
+                        <img class="choose-goods-icon" id="choose-goods-r" src="/Public/Image/base/choose-goods-r.png" alt="">
+                        <span class="goods-num-span">{$data.goodsNum}</span>
+                        <img  class="choose-goods-icon" id="choose-goods-p" src="/Public/Image/base/choose-goods-p.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <notempty name="data.specification"><div class="size-div">商品规格：{$data.specification}</div></notempty>
+            <div class="goods-des-div">{$data.goodsDes}</div>
+        </div>
+    </div>
+    <div class="buy-btn" data-goodsid="{$data.goodsId}">确定</div>
+    <script src="/Public/js/zepto.min.js"></script>
+    <script src="/Public/js/swiper.min.js"></script>
+    <script>
+
+        /* 初始化轮播 ***/
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView : 5,
+            spaceBetween: 15
+        });
+
+        //初始化数据
+        function init(){
+            // @TODO 初始化数据
+        };
+
+        //选择预览
+        $('.swiper-slide').on('click', function(){
+            var el = $(this);
+            var url = el.find('img').attr('src');
+            $('.swiper-slide').removeClass('selected-style');
+            el.addClass('selected-style');
+            $('.preview-img').attr('src', url);
+
+        });
+
+        //删除减商品
+        $('#choose-goods-r').on('click', function(){
+            var numEl = $('.goods-num-span');
+            var num = parseInt(numEl.text());
+            if (num > 0) {
+                --num;
+                numEl.text(num);
+            }
+            return;
+        });
+
+        //增加商品
+        $('#choose-goods-p').on('click', function(){
+            var numEl = $('.goods-num-span');
+            var num = parseInt(numEl.text());
+            numEl.text(num+1);
+        });
+
+        //确定
+        $('.buy-btn').on('click', function () {
+            var goodsId = $(this).data('goodsid'), goodsNum = $('.goods-num-span').text();
+            var goodsDesc = {
+                goodsId : goodsId,
+                goodsNum : goodsNum
+            }
+            if (typeof android != 'undefined' && typeof android.selectGoodsFromDetail === 'function') {
+                android.selectGoodsFromDetail(JSON.stringify(goodsDesc));
+            }
+
+            if (typeof selectGoodsFromDetail === 'function') {
+                goodsDesc['rawData'] = JSON.stringify(goodsDesc);
+                selectGoodsFromDetail(goodsDesc);
+            }
+        })
+
+    </script>
+</body>
+</html>

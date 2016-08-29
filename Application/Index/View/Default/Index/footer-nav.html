@@ -1,0 +1,5 @@
+<div class="bottom-nav">
+    <a href="<if condition='($navType) eq "navigation"'>#<else/>/Index/Index/navigation<notempty name="activityId">?activityId={$activityId}<notempty name="subType">&subType={$subType}</notempty></notempty></if>"><div class="home <if condition='($navType) eq "navigation"'>active</if>">首页</div></a>
+    <a href="<if condition='($navType) eq "payOrderList"'>#<else/>/Index/Index/payOrderList<notempty name="activityId">?activityId={$activityId}<notempty name="subType">&subType={$subType}</notempty></notempty></if>"><div class="list <if condition='($navType) eq "payOrderList"'>active</if>">订单列表</div></a>
+    <a href="/Index/Index/customerServices"><div class="custom">客服</div></a>
+</div>

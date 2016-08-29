@@ -1,0 +1,180 @@
+<style>
+        .thWidth{
+                max-width: 120px !important;
+                width: 320px;
+
+        }
+
+        .apadding{
+                padding-right: 20px;
+        }
+</style>
+<div class="page-content">
+        <div class="page-header position-relative">
+                <h1>新增普通品类</h1>
+        </div>
+
+        <div class="row">
+                <div class="col-xs-12">    
+                        <form id="add_category" class="form-horizontal" method="post" role="form" action="/Warehouse/Category/toAdd">                        
+                                <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="category_code"> 商品编号</label>
+
+                                        <div class="col-sm-9">
+                                                <present name="sceneData">
+                                                        <input type="text" id="category_code" name="code" placeholder="品类编号" class="col-xs-10 col-sm-5" value="{$sceneData['code']|default=''}" />
+                                                        <else />
+                                                        <input type="text" id="category_code" name="code" placeholder="品类编号" class="col-xs-10 col-sm-5"/>                                                
+                                                </present>
+                                        </div>
+                                </div>
+                                <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="category_name"> 商品名称 </label>
+                                        <div class="col-sm-9">
+                                                <present name="sceneData">
+                                                        <input type="text" id="category_name" name="name" placeholder="品类名称" class="col-xs-10 col-sm-5" value='{$sceneData["name"]|default=""}' />
+                                                        <else />                                                
+                                                        <input type="text" id="category_name" name="name" placeholder="品类名称" class="col-xs-10 col-sm-5" />
+                                                </present>
+                                        </div>
+                                </div>
+                                <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="category_price"> 单价(元) </label>
+                                        <div class="col-sm-9">
+                                                <present name="sceneData">
+                                                        <input type="text" id="category_price" name="price" placeholder="单价/元" class="col-xs-10 col-sm-5" value="{$sceneData['price']|default=''}" />
+                                                        <else />                                                
+                                                        <input type="text" id="category_price" name="price" placeholder="单价/元" class="col-xs-10 col-sm-5" />
+                                                </present>
+                                        </div>
+                                </div>
+                                <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="category_weight"> 重量(克) </label>
+                                        <div class="col-sm-9">
+                                                <present name="sceneData">
+                                                        <input type="text" id="category_weight" name="weight" placeholder="单位重量/克" class="col-xs-10 col-sm-5" value="{$sceneData['weight']|default=''}" />
+                                                        <else />
+                                                        <input type="text" id="category_weight" name="weight" placeholder="单位重量/克" class="col-xs-10 col-sm-5" />
+                                                </present>
+                                        </div>
+                                </div>  
+                                <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="category_shelf"> 货架编号 </label>
+                                        <div class="col-sm-9">
+                                                <select name="shelf" class="col-xs-10 col-sm-5" id="categoty_shelf">
+                                                        <option value="">选择货架编号</option>
+                                                        <foreach name="zoneList" item="one" key="shelfNo">
+                                                        <option value="{$shelfNo}">{$shelfNo}</option>                                                        
+                                                        </foreach>
+                                                </select>
+                                        </div>
+                                </div>                        
+<!--                                <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="category_start"> 仓储起始位置 </label>
+                                        <div class="col-sm-9">
+                                                <present name="sceneData">
+                                                        <input type="text" id="category_start" name="start" placeholder="如001A002：第001个货架第A层第001个位置" class="col-xs-10 col-sm-5" value="{$sceneData['start']|default=''}" />
+                                                        <else />
+                                                        <input type="text" id="category_start" name="start" placeholder="如001A002：第001个货架第A层第001个位置" class="col-xs-10 col-sm-5" />
+                                                </present>
+                                        </div>
+                                </div>-->
+                                <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="category_max"> 最大库存 </label>
+                                        <div class="col-sm-9">
+                                                <present name="sceneData">
+                                                        <input type="text" id="category_max" name="max" placeholder="如：1000" class="col-xs-10 col-sm-5" value="{$sceneData['max']|default=''}" />
+                                                        <else />                                                
+                                                        <input type="text" id="category_max" name="max" placeholder="如：1000" class="col-xs-10 col-sm-5" />
+                                                </present>
+                                        </div>
+                                </div>
+                                <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="category_desc"> 说明 </label>
+                                        <div class="col-sm-9">
+                                                <present name="sceneData">
+                                                        <textarea  id="category_desc" name="desc" placeholder="品类说明描述" class="col-xs-10 col-sm-5" maxlength="300">{$sceneData['desc']|default=''}</textarea>
+                                                        <else />                                                
+                                                        <textarea  id="category_desc" name="desc" placeholder="品类说明描述" class="col-xs-10 col-sm-5" maxlength="300"></textarea>
+                                                </present>
+                                        </div>
+                                </div>                                
+
+                                <div class="clearfix form-actions">
+                                        <div class="col-md-offset-3 col-md-9">
+                                                <button class="btn btn-info" id="add_btn" type="button">
+                                                        <i class="icon-ok bigger-110"></i>
+                                                        新增
+                                                </button>
+                                                &nbsp; &nbsp; &nbsp;
+                                                <button class="btn" id="reset_btn" type="reset">
+                                                        <i class="icon-undo bigger-110"></i>
+                                                        重置
+                                                </button>
+                                        </div>
+                                </div>
+                                <div class="hr hr-24"></div>                                
+
+                        </form>
+                </div>
+        </div>
+
+</div>
+<!-- form validate -->
+<script src="/Public/js/wh/validate.js"></script>
+<script src="/Public/js/wh/validata_message.js"></script>
+<script src="/Public/js/wh/validata_metadata.js"></script>
+<script>
+        $(document).ready(function () {
+                $("#categoty_shelf").val("{$sceneData['shelf']|default=''}");
+                $("#add_btn").click(function () {
+                        $("form:first").submit();
+                });
+                $("#reset_btn").click(function () {
+                        $("form:first").reset();
+                });
+                $("#categoty_shelf").change(function(){
+                        $("#category_start").val($(this).val()+"A001");
+                });
+        });
+        $("#add_category").validate({
+//                debug:true,
+                rules: {
+                        code: {
+                                required: true,
+                                minlength: 3,
+                                maxlength: 16
+                        },
+                        name: {
+                                required: true,
+                                minlength: 3,
+                                maxlength: 16
+                        },
+                        price: {
+                                required: true,
+                                number: true,
+                                min: 0,
+                                max: 99999
+                        },
+                        weight: {
+                                number: true,
+                                min: 0,
+                                max: 999999
+                        },
+                        shelf: {
+//                                remote:"checkShelf.php",
+                                minlength: 1,
+                                maxlength: 16
+                        },
+                        start: {
+                                minlength: 3,
+                                maxlength: 16
+                        },
+                        max: {
+                                number: true,
+                                min: 0,
+                                max: 10000
+                        }
+                }
+        });
+</script>

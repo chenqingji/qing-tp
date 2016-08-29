@@ -1,0 +1,246 @@
+@charset "UTF-8";
+.bottom-nav {
+  position: fixed;
+  bottom: 0px;
+  height: 1.30667rem;
+  left: 0px;
+  width: 100%;
+  clear: both;
+  border-top: solid 1px #E4E4E4;
+  background-color: #fff;
+  overflow: hidden;
+  clear: both;
+}
+.bottom-nav a {
+  height: 1.30667rem;
+  font-size: 0.32rem;
+  text-decoration: none;
+  color: #9B9B9B;
+  text-align: center;
+  line-height: 2.00667rem;
+}
+.bottom-nav div {
+  position: relative;
+  width: 33%;
+  float: left;
+  text-align: center;
+}
+.bottom-nav div.active {
+  color: #3A95FF;
+}
+.bottom-nav div:before {
+  position: absolute;
+  top: .1rem;
+  left: 50%;
+  margin-left: -0.35rem;
+  height: 0.66667rem;
+  width: 0.66667rem;
+  background-repeat: no-repeat;
+  background-size: 0.66667rem;
+  content: "";
+}
+.bottom-nav .home:before {
+  background-image: url("/Public/Image/home.png");
+}
+.bottom-nav .list:before {
+  background-image: url("/Public/Image/list.png");
+}
+.bottom-nav .custom:before {
+  background-image: url("/Public/Image/custom.png");
+}
+.bottom-nav .active.home:before {
+  background-image: url("/Public/Image/home-hover.png");
+}
+.bottom-nav .active.list:before {
+  background-image: url("/Public/Image/list-hover.png");
+}
+.bottom-nav .active.custom:before {
+  background-image: url("/Public/Image/custom-hover.png");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  position: relative;
+  width: 100%;
+  background-color: #F2F2F2;
+}
+
+.top-div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1.28rem;
+  background-color: #FFFFFF;
+  overflow: hidden;
+  clear: both;
+}
+.top-div div {
+  width: 4.26667rem;
+  height: 0.8rem;
+  border: 1px solid #3A95FF;
+  border-radius: 0.10667rem;
+  margin: 0.24rem auto 0;
+}
+.top-div div span {
+  display: inline-block;
+  width: 50.001%;
+  height: 0.8rem;
+  float: left;
+  font-size: 0.37333rem;
+  color: #3A95FF;
+  text-align: center;
+  line-height: 0.8rem;
+}
+
+.active-style {
+  color: #fff !important;
+  background-color: #3A95FF;
+  border: #3A95FF;
+}
+
+.coupon-list-div {
+  width: 10rem;
+  background-color: #fff;
+  background-color: #F2F2F2;
+  padding-bottom: 1.46667rem;
+  padding-top: 1.28rem;
+  /*box-shadow: 0 pxToRem(1px) pxToRem(1px) 0 rgba(0, 0, 0, 0.1);*/
+}
+.coupon-list-div .coupon-div {
+  margin: 0.21333rem 0 0 0;
+  background-color: #fff;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+}
+
+.order-num-div {
+  height: 0.98667rem;
+  line-height: 0.98667rem;
+  font-size: 0.37333rem;
+  color: #666666;
+  border-bottom: 1px solid #eee;
+}
+.order-num-div span {
+  margin-left: 0.42667rem;
+}
+
+.left-div, .right-div {
+  height: 2.72rem;
+  float: left;
+  margin-top: 0.29333rem;
+  border-bottom: 1px solid #eee;
+}
+
+.left-div {
+  display: inline-block;
+  width: 2.66667rem;
+  margin-left: 0.42667rem;
+}
+.left-div img {
+  width: 2.13333rem;
+  height: 2.13333rem;
+  border-radius: 0.10667rem;
+}
+
+.right-div {
+  width: 6.45333rem;
+  text-align: left;
+}
+.right-div p:nth-of-type(1) {
+  font-size: 0.42667rem;
+  color: #000;
+}
+.right-div p:nth-of-type(2) {
+  font-size: 0.37333rem;
+  color: #4A4A4A;
+  margin: 0.24rem 0 0.56rem 0;
+}
+.right-div p:nth-of-type(2) span {
+  color: #ff4e4e;
+}
+.right-div p:nth-of-type(3) {
+  font-size: 0.37333rem;
+  color: #9B9B9B;
+}
+
+.btn-style, .order-info, .pay-btn, .logistics-info {
+  width: 2.50667rem;
+  height: 1.01333rem;
+  float: right;
+  margin: 0.24rem 0.26667rem 0.26667rem 0;
+  font-size: 0.42667rem;
+  text-align: center;
+  line-height: 1.01333rem;
+  border-radius: 0.10667rem;
+}
+
+.button-div {
+  overflow: hidden;
+  clear: both;
+}
+.button-div span {
+  margin-left: 0.42667rem;
+  font-size: 0.34667rem;
+  color: #9B9B9B;
+  clear: both;
+  overflow: hidden;
+}
+.button-div a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.order-info {
+  border: 1px solid #E4E4E4;
+  color: #4A4A4A;
+}
+
+.pay-btn {
+  color: #fff;
+  background-color: #54D175;
+}
+
+.logistics-info {
+  background-color: #F0C04D;
+}
+.logistics-info a {
+  color: #fff;
+}
+
+/**  没订单  *************************************************************/
+.no-data-div {
+  height: 100%;
+  border: none;
+}
+.no-data-div .no-data-div-word {
+  text-align: center;
+  font-size: 0.37333rem;
+  color: #9B9B9B;
+  margin: 2.48rem 0 0.4rem 0;
+}
+.no-data-div img {
+  display: block;
+  width: 2.45333rem;
+  height: 3.2rem;
+  margin: 0 auto 2.08rem;
+}
+.no-data-div .select-pic-btn {
+  width: 4.8rem;
+  height: 1.06667rem;
+  border: 1px solid #0076FF;
+  font-size: 0.42667rem;
+  text-align: center;
+  line-height: 1.06667rem;
+  margin: 0 auto;
+  border-radius: 2.66667rem;
+}
+.no-data-div .select-pic-btn a {
+  text-decoration: none;
+  color: #0076FE;
+}
+
+/*# sourceMappingURL=payorderlist.css.map */

@@ -1,0 +1,97 @@
+<link rel="stylesheet" href="/Public/css/wh/dropzone.css" />
+<link rel="stylesheet" href="/Public/css/wh/ace.min.css" />
+<style>
+        .dropzone{min-height:200px;}    
+</style>
+<div class="page-content">
+        <div class="page-header">
+                <h1>
+                        导入第三方订单
+                </h1>
+        </div><!-- /.page-header -->
+
+        <div class="row">
+                <div id="upload-div" class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+
+                        <div class="alert alert-info">
+                                <i class="icon-hand-right"></i>
+                                提示：文件限制大小5M（淘宝订单报表文件名更改为tb1.csv,宝贝报表文件名更改为tb2.csv）
+                                <button class="close" data-dismiss="alert">
+                                        <i class="icon-remove"></i>
+                                </button>
+                        </div>
+
+                        <div id="dropzone">
+                                <form id="upload-form" action="toUpload" class="dropzone" enctype="multipart/form-data" method="post" >
+                                        <div class="fallback">
+                                                <input name="orderfile" type="file" multiple="" />
+                                        </div>
+                                </form>
+                        </div><!-- PAGE CONTENT ENDS -->
+                </div><!-- /.col -->
+        </div><!-- /.row -->
+        <div class="clearfix">
+                <form action="toImport" target="_blank" method="post" id="import-form">
+                        <div>
+                                <input id="import-input" name="importType" type="hidden" value="tb" />
+                                <input id="import-filename" name="importFilename" type="hidden" value="" />
+                        </div>
+                </form>
+                <div class="col-md-offset-3 col-md-9">
+                        <button class="btn btn-primary" id="tb_btn" type="button">
+                                <i class="icon-ok bigger-300"></i>
+                                导入淘宝订单
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-success" id="wxd_btn" type="button">
+                                <i class="icon-ok bigger-300"></i>
+                                导入微店订单
+                        </button>                        
+                </div>
+        </div>
+        <div class="hr hr-24"></div>         
+</div><!-- /.page-content -->
+<script src="/Public/js/wh/dropzone.min.js"></script>
+<script src="/Public/js/wh/wh.js"></script>
+<script type="text/javascript">
+        jQuery(function ($) {
+                $("#tb_btn").click(function () {
+                        $("#import-input").val("tb");
+                        $("#import-form").submit();
+                });
+                $("#wxd_btn").click(function () {
+                        $("#import-input").val("wd");
+                        $("#import-form").submit();
+                });
+
+
+                try {
+                        $(".dropzone").dropzone({
+                                paramName: "orderfile", // The name that will be used to transfer the file
+                                maxFilesize: 5, // MB
+                                addRemoveLinks: true,
+                                dictDefaultMessage:
+                                        '<span class="bigger-150 bolder"><i class="icon-caret-right red"></i> 拖拽文件</span> 上传 \
+                <span class="smaller-80 grey">(或点击上传)</span> <br /> \
+                <i class="upload-icon icon-cloud-upload blue icon-3x"></i>'
+                                ,
+                                dictResponseError: 'Error while uploading file!',
+                                //change the previewTemplate to use Bootstrap progress bars
+                                previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n    <div class=\"dz-size\" data-dz-size></div>\n    <img data-dz-thumbnail />\n  </div>\n  <div class=\"progress progress-small progress-striped active\"><div class=\"progress-bar progress-bar-success\" data-dz-uploadprogress></div></div>\n  <div class=\"dz-success-mark\"><span></span></div>\n  <div class=\"dz-error-mark\"><span></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n</div>",
+                                success: function (localres, serverres) {
+                                        if (serverres.status === 0) {
+                                                $("#upload-div").fn_tips("danger", "exclamation", serverres.msg, 3000);
+                                        } else {
+                                                $("#upload-div").fn_tips("success", "ok", serverres.msg + "文件上传成功");
+                                                $("#import-filename").val(serverres.msg);
+                                        }
+                                }
+
+                        });
+                } catch (e) {
+                        alert('Dropzone.js does not support older browsers!');
+                }
+
+        });
+</script>

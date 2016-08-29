@@ -1,0 +1,67 @@
+@import "function";
+$baseFontSize:37.5px;
+$topH:pxToRem(48px);
+$bottomH:pxToRem(49px);
+$bottomNavImgSize: pxToRem(25px);
+.bottom-nav {
+  position: fixed;
+  bottom: 0px;
+  height: $bottomH;
+  left: 0px;
+  width: 100%;
+  clear: both;
+  border-top: solid 1px #E4E4E4;
+  background-color: #fff;
+  overflow: hidden;
+  clear: both;
+  a {
+    height: $bottomH;
+    font-size: pxToRem(12px);
+    text-decoration: none;
+    color: #9B9B9B;
+    text-align: center;
+    line-height: $bottomH + 0.7;
+  }
+
+  div {
+    position: relative;
+    width: 33%;
+    float: left;
+    text-align: center;
+
+    &.active {
+      color: #3A95FF;
+    }
+
+    &:before{
+      position: absolute;
+      top: .1rem;
+      left: 50%;
+      margin-left: -0.35rem;
+      height: $bottomNavImgSize;
+      width: $bottomNavImgSize;
+      background-repeat: no-repeat;
+      background-size: $bottomNavImgSize;
+      content: "";
+    }
+  }
+
+  .home:before{
+    background-image: url("/Public/Image/home.png");
+  }
+  .list:before{
+    background-image: url("/Public/Image/list.png");
+  }
+  .custom:before{
+    background-image: url("/Public/Image/custom.png");
+  }
+  .active.home:before{
+    background-image: url("/Public/Image/home-hover.png");
+  }
+  .active.list:before{
+    background-image: url("/Public/Image/list-hover.png");
+  }
+  .active.custom:before{
+    background-image: url("/Public/Image/custom-hover.png");
+  }
+}

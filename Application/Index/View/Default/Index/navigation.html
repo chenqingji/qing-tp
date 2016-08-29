@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta content="no-cache" http-equiv="Pragma">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <script src="{$resyuming}Public/js/rem.js"></script>
+    <link rel="stylesheet" href="{$resyuming}Public/css/swiper.min.css?v={$static_v}"/>
+    <link rel="stylesheet" href="/Public/css/navigation.css?v={$static_v}">
+    <title>魔力快印</title>
+</head>
+<body>
+<div>
+    <div class="nav">
+        <img class="logo" src="{$resyuming}Public/Image/logo.png"/>
+        <a href="/Index/Index/getUserCouponList"><span class="txt">优惠券<if condition="!empty($couponCount)"><span class="cnt">{$couponCount}</span></if></span></a>
+    </div>
+    <div class="banner">
+        <div class="swiper-container" id="banner">
+            <div class="swiper-wrapper">
+                <volist name="banner" id="v">
+                    <div class="swiper-slide"><a href="{$v.url}"><img src="{$v.img}"/></a></div>
+                </volist>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination swiper-pagination-h"></div>
+        </div>
+        <div class="btn"><a href="/Index/Index/orderEx<notempty name="activityId">?activityId={$activityId}<notempty name="subType">&subType={$subType}</notempty></notempty>">立即打印</a></div>
+    </div>
+    <include file="./Application/Index/View/Default/Index/footer-nav.html" />
+</div>
+<div style="display:none">
+    <script src="http://s4.cnzz.com/z_stat.php?id=1256866199&web_id=1256866199" language="JavaScript"></script>
+</div>
+<script src="{$resyuming}Public/js/swiper.min.js?v={$static_v}"></script>
+<script>
+    var swiperH = new Swiper('#banner', {
+        pagination: '.swiper-pagination-h',
+        paginationClickable: true,
+        loop: true,
+        autoplay: 2000,
+        speed:1300,
+        autoplayDisableOnInteraction:false
+    });
+</script>
+</body>
+</html>

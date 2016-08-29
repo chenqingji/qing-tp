@@ -1,0 +1,151 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body, .wrap-div {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.top-div {
+  position: relative;
+  width: 100%;
+  height: 1.06667rem;
+  line-height: 1.06667rem;
+  background-color: #fff;
+  font-size: 0.42667rem;
+  color: #4A4A4A;
+  text-align: center;
+  border-bottom: 1px solid #DEDEDE;
+}
+.top-div .back-btn-icon {
+  position: absolute;
+  top: 50%;
+  left: 0.37333rem;
+  margin-top: -0.33333rem;
+  width: 0.66667rem;
+  height: 0.66667rem;
+}
+
+.express-num-div {
+  width: 10rem;
+  height: 3.2rem;
+  border-bottom: 1px solid #DEDEDE;
+}
+.express-num-div .left-img {
+  width: 2.13333rem;
+  height: 2.13333rem;
+  border-radius: 0.10667rem;
+  margin: 0.53333rem;
+}
+.express-num-div .right-div {
+  display: inline-block;
+  float: right;
+  width: 6.8rem;
+}
+.express-num-div .right-div p {
+  font-size: 0.34667rem;
+  color: #4A4A4A;
+}
+.express-num-div .right-div p:nth-of-type(3) {
+  margin: 0.16rem 0 0.16rem 0;
+}
+.express-num-div .right-div p:nth-of-type(1) {
+  margin: 0.50667rem 0 0.26667rem 0;
+  font-size: 0.42667rem;
+}
+
+.express-info {
+  width: 6.4rem;
+  height: 8rem;
+  margin: 2rem 0 0 1.36rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.express-info .express-content {
+  width: 6.4rem;
+  height: 100%;
+  margin-left: 0.37333rem;
+  border-left: 1px solid #3A95FF;
+}
+.express-info .express-content .express-part:nth-of-type(1) span {
+  top: 0;
+  background-color: #3A95FF;
+}
+.express-info .express-content .express-part {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1.06667rem;
+}
+.express-info .express-content .express-part span {
+  display: block;
+  position: absolute;
+  top: 0.13333rem;
+  left: 0;
+  margin-left: -0.24rem;
+  width: 0.37333rem;
+  height: 0.37333rem;
+  border: 0.05333rem solid #3A95FF;
+  background-color: #fff;
+  border-radius: 50%;
+}
+.express-info .express-content .express-part p {
+  margin-left: 0.48rem;
+}
+.express-info .express-content .express-part p:nth-of-type(1) {
+  font-size: 0.37333rem;
+  color: #515151;
+}
+.express-info .express-content .express-part p:nth-of-type(2) {
+  margin-top: 0.16rem;
+  font-size: 0.32rem;
+  color: #9B9B9B;
+}
+
+.express-no-wuliu img {
+  display: block;
+  width: 2.13333rem;
+  height: 2.13333rem;
+  margin: 1.89333rem auto 0.58667rem;
+}
+.express-no-wuliu p {
+  text-align: center;
+  font-size: 0.37333rem;
+  color: #515151;
+}
+
+.footer-div {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  /*height: pxToRem(280px);*/
+  background-color: #fff;
+}
+.footer-div div {
+  width: 2.34667rem;
+  height: 0.96rem;
+  float: right;
+  margin: 0.32rem 0.45333rem 0.32rem 0;
+  text-align: center;
+  line-height: 0.96rem;
+  border-radius: 0.10667rem;
+  border: 1px solid #E4E4E4;
+  font-size: 0.37333rem;
+}
+.footer-div div a {
+  text-decoration: none;
+}
+.footer-div a:nth-of-type(1) {
+  color: #fff;
+}
+.footer-div a:nth-of-type(1) div {
+  background-color: #54D175;
+}
+.footer-div a:nth-of-type(2) {
+  color: #4A4A4A;
+}
+
+/*# sourceMappingURL=express.css.map */

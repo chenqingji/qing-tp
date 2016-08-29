@@ -1,0 +1,145 @@
+{__NOLAYOUT__} 
+
+<!DOCTYPE html>
+<html lang="zh">
+        <head>
+                <meta charset="utf-8" />
+                <title>魔力快印拣货清单-{$pickId}</title>
+                <meta name="keywords" content="魔力快印物流仓储系统" />
+                <meta name="description" content="拣货清单" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+                <!-- basic styles -->
+
+                <link href="/Public/css/wh/bootstrap.min.css" rel="stylesheet" />
+                <link rel="stylesheet" href="/Public/css/wh/jquery-ui-1.10.3.custom.min.css" />
+                <link rel="stylesheet" href="/Public/css/wh/font/css/font-awesome.min.css" />
+
+                <!--[if IE 7]>
+                  <link rel="stylesheet" href="/Public/css/wh/font/css/font-awesome-ie7.min.css" />
+                <![endif]-->
+
+                <!-- page specific plugin styles -->
+                <style>
+                        .page-div{width:auto;}
+                        .pindan-div{margin-top: 30px;}
+                </style>
+        </head>
+
+        <body>
+                <div id="page-div" class="page-div">
+                        <div>
+                                <div>
+                                        <div id="barcode-div" style="float:right;width:300px;height: 100px;">BARCODE</div>
+                                        <div id="logo-div" style="width:300px;height: 100px;">
+                                                <image src="/Public/Image/logo.png"></image>
+                                        </div>
+                                </div>
+                                <div>
+                                        <hr style="margin:0px;"/>
+                                </div>
+                        </div>
+                        <div>
+                                <h4>姓名：{$head['name']}&nbsp;&nbsp;手机号：{$head['phone']}&nbsp;&nbsp;来源：{$head['from_app']}  </h4>
+                                <h4>收货地址：{$head['addr']}</h4>
+                        </div>
+                        <!-- PAGE CONTENT BEGINS -->
+                        <h4>商品清单：</h4>
+                        <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                        <tr>
+                                                <th>商品编号</th>
+                                                <th>商品名称</th>
+                                                <th class="hidden-480">货架位置</th>
+                                                <th>数量</th>
+                                        </tr>
+                                </thead>
+
+                                <tbody>
+                                <foreach name="product" item="one" key="product_id">    
+                                        <tr>
+                                                <td>{$product_id}</td>
+                                                <td>{$one['name']}</td>
+                                                <td class="hidden-480">{$one['location']}</td>
+                                                <td>{$one['count']}</td>
+                                        </tr>
+                                </foreach>
+                                </tbody>
+                        </table>
+                </div> 
+
+                <div id="confirm-div" class="clearfix form-actions">
+                        <div class="col-md-offset-3 col-md-9">
+                                <form id="hidden-form" target="_blank" method="post" action="/warehouse/picking/test">
+                                        <input type="hidden" id="hidden_tp" name="tp" value="{$tp}"/>
+                                        <input type="text" id="hh123" name="id" value=""/>
+                                </form>
+                              
+                                &nbsp; &nbsp; &nbsp;
+                                <button class="btn btn-success" id="ok_btn" type="button">
+                                        <i class="icon-ok bigger-300"></i>
+                                        测试
+                                </button>
+                        </div>
+                </div>     
+                <div class="pindan-div">
+                        <div class="col-sm-6">
+                                <label>拼单订单号：</label>
+                                <ul>
+                                        <foreach name="order" item="one" key="id">    
+                                                <li>
+                                                        <strong>{$one}</strong>
+                                                </li>
+                                        </foreach>
+                                </ul>
+                        </div>                                
+                </div>                
+
+                <script src='/Public/js/wh/jquery-2.0.3.min.js'></script>
+                <!--[if IE]>
+                        <script src='/Public/js/wh/jquery-1.10.2.min.js'></script>;
+                <![endif]-->                
+                <!--basic scripts-->
+                <script src="/Public/js/wh/jquery-ui-1.10.3.custom.min.js"></script>                  
+                <script src="/Public/js/wh/bootstrap.min.js"></script>
+                <script src="/Public/js/wh/jquery-barcode.min.js"></script>
+                <script src="/Public/js/wh/jquery.jqprint-0.3.js"></script>
+                <script src="/Public/js/wh/jquery-migrate-1.1.0.js"></script>
+                <!--page specific plugin scripts-->
+                <script>
+                        $(document).ready(function () {
+                                $("#hh123").focus();
+                                $("#ok_btn").keyup(function(){
+                                            if(event.keyCode == 13){
+                                                $("#hidden-form").submit();
+                                            }
+                                        });                                
+                                $("#ok_btn").click(function () {
+                                        $("#hidden-form").submit();
+                                });
+//                                $("#barcode-div").barcode("{$pickId}", "code128", {barWidth: 1, barHeight: 60});
+//                                $("#logo-div").css({margin: "0 10px"});
+                                //                        window.print();
+//                                $("#page-div").jqprint({
+//                                        debug: false,
+//                                        importCSS: true,
+//                                        printContainer: true,
+//                                        operaSupport: true
+//                                });
+//                                $("#confirm-div").modal({});
+//                                $("#cancel_btn").click(function () {
+//                                        window.location.href = "/Warehouse/Picking/index";
+//                                });
+//                                $("#reprint_btn").click(function () {
+//                                        $("#page-div").jqprint({
+//                                                debug: false,
+//                                                importCSS: true,
+//                                                printContainer: true,
+//                                                operaSupport: true
+//                                        });
+//                                });
+
+                        });
+                </script>
+        </body>
+</html>

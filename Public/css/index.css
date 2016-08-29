@@ -1,0 +1,115 @@
+body {
+  background: #fff;
+  padding: 0;
+  border: 0;
+  margin: 0;
+}
+
+html {
+    font-size : 20px;
+    font-family: "黑体", arial, helvetica, sans-serif;
+}
+@media only screen and (min-width: 401px){
+    html {
+        font-size: 25px !important;
+    }
+}
+@media only screen and (min-width: 428px){
+    html {
+        font-size: 26.75px !important;
+    }
+}
+@media only screen and (min-width: 481px){
+    html {
+        font-size: 30px !important;
+    }
+}
+@media only screen and (min-width: 569px){
+    html {
+        font-size: 35px !important;
+    }
+}
+@media only screen and (min-width: 641px){
+    html {
+        font-size: 40px !important;
+    }
+}
+
+.panel {
+    margin: 10px auto;
+    width: 15.7rem;
+}
+
+#picsGroup div {
+    float: left;
+    position: relative;
+}
+
+#picsGroup .upload-img {
+    width: 4.4rem;
+    height: 5rem;
+    margin: .15rem;
+}
+
+#picsGroup .del-img {
+    width: 1rem;
+    position: absolute;
+    top: -0.1rem;
+    right: -0.1rem;
+}
+
+#picsGroup form {
+    opacity: 0;
+    height: 0px;
+    pointer-events: none;
+}
+
+#uploadBtn {
+    margin-top: .5rem;
+    width: 100%;
+    margin-bottom: .5rem;
+    padding: .6rem;
+}
+#saveBtn {
+    float: left;
+}
+#submitBtn {
+    float: right;
+	width: 100%;
+}
+
+#cover {
+    z-index: 1000;
+    display:none;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: rgba(0,0,0,.7);
+    color: #fff;
+    font-size: 14px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width:100%;
+    height:100%;
+}
+
+#cover p {
+    margin-top: 50%;
+}
+
+#address select {
+    width: auto;
+    display: inline;
+    max-width: 4.5rem;
+}
+
+#street {
+    margin-top: .2rem;
+}
+
+#exceptAreaTip {
+    color:red;
+    margin: 5px 0px 0px;
+    display:none;
+}

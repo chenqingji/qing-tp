@@ -1,0 +1,51 @@
+{__NOLAYOUT__}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>确认页面</title>
+<style>
+*{ margin:0; padding:0; font-family:"微软雅黑";}
+
+.wp{ width:960px; margin:auto auto; margin-top:80px;}
+
+.wp_box{ width:540px; padding:40px; padding-left:100px; margin:auto auto; border:1px solid #E8E8E8; box-shadow:0px 0px 10px #EEE; background: url(/Public/Image/common/rig.png) no-repeat 40px center,url(/Public/Image/common/07.png) no-repeat right top;}
+
+.wp_box_p1{ font-size:14px; color:#555668; height:32px; line-height:32px;}
+
+.wp_box_a{ font-size:14px; font-weight:600; color:#1D478D; height:32px; line-height:32px; text-decoration:none;}
+
+.wp_box_span{ font-size:14px; font-weight:600; color:#1D478D; height:32px; line-height:32px; text-decoration:none;}
+
+.wp_box_a:hover{ text-decoration:underline;}
+
+</style>
+
+<script src='/Public/JS/jquery-2.0.3.min.js'></script>
+<script type="text/javascript">
+	var int=self.setInterval("daojishi()",1000);
+	var times = {$waitSecond};
+	function daojishi()
+	{
+		times = times-1;
+		if( times<=0 )
+		{
+			times = 0;
+			window.location.href ='{$jumpUrl}';
+		}
+	}
+	
+</script>
+
+</head>
+
+<body>
+<div class="wp">
+     <div class="wp_box">
+        <p class="wp_box_p1">{$message}</p>
+        <a class="wp_box_a" href="{$jumpUrl}">[ 如果您的浏览器没有自动跳转，请点击此链接 ]</a>
+     </div>
+</div>
+
+</body>
+</html>

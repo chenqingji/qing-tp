@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta content="no-cache" http-equiv="Pragma">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <script src="/Public/js/rem.js?v={$static_v}"></script>
+    <link rel="stylesheet" href="/Public/css/couponlist.css?v={$static_v}">
+    <title>优惠券列表页</title>
+</head>
+<body>
+    <div class="wrap-div">
+        <div class="top-div">
+            <div class="banner-div">
+                <img class="back-btn-icon" src="/Public/Image/base/back.png">
+                <span class="banner-title">我的优惠券</span>
+            </div>
+        </div>
+        <div class="coupon-list-div">
+            <!--<div class="coupon-div">
+                <div class="left-div not-free-coupon"> &lt;!&ndash;not-free-coupon&ndash;&gt;
+                    <div>
+                        <p>15</p>
+                        <p>无门槛使用</p>
+                    </div>
+                </div>
+                <div class="right-div">
+                    <p>免费打印20张</p>
+                    <p><span></span>免费打印20张</p>
+                    <p><span></span>有效期至2016.10.15</p>
+                </div>
+            </div>-->
+
+        </div>
+        <if condition="$Think.get.type neq -1"><div class="check-coupon-histroy" ><img src="/Public/Image/base/couponhistry.png"><a href="/Index/Index/getUserCouponList?type=-1">查看历史优惠券</a></div></if>
+    </div>
+    <!--满20元减5元优惠券一张
+    满50元减15元优惠券一张
+    满100元减30元优惠券一张
+    满150元减50元优惠券一张
+    $type -1 过期,  0 可用
+    -->
+    <script src="/Public/js/zepto.min.js"></script>
+    <script>
+        var noCouponHtmlStr = '<div class="no-coupon"><img src="/Public/Image/no-coupon.png"/> <p><if condition="$Think.get.type eq -1">您还没有历史优惠券<else/>您目前无可用优惠券</if></p></div>';
+        var couponData = {$couponList|json_encode};
+        var couponType = "{$Think.get.type}";
+        var backUrl = "{$backUrl}";
+        var ajaxUrl = '/Index/Index/postUserCouponList';
+        var notAjax = false;
+        var useUrl= "/Index/Index/orderEx";
+
+        function bindUrl(cid) {
+            window.location.href = "/Index/Index/orderDetailEx/cid/"+cid;
+        }
+    </script>
+    <script src="/Public/js/couponlist.js"></script>
+</body>
+</html>

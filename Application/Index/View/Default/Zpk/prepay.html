@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+    <title><?php echo $titleName; ?></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="full-screen" content="true"/>
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="x5-fullscreen" content="true"/>
+    <meta name="360-fullscreen" content="true"/>
+    <link rel="stylesheet" href="<?php echo $resyuming; ?>resource/css/molika/swiper.min.css?v=<?php echo $static_v; ?>"/>
+    <style>
+        html, body {
+            /*-webkit-touch-callout: none;*/
+            /*-webkit-user-select:none;*/
+            -ms-touch-action: none;
+            background: #444444;
+            padding: 0;
+            border: 0;
+            margin: 0;
+            height: 100%;
+        }
+
+        #egret-canvas-container{
+            background-color:#444444;
+        }
+
+        .wrap_init{
+            width: 100%;
+            height: 200px;
+            background-color: #525252;
+            overflow: hidden;
+            z-index: 9999;
+        }
+        .wrap_init .wrap_init_info{
+           width: 63%;
+           /*height: 40px;*/
+           position: relative;
+           margin: 0 auto;
+           margin-top: 20%;
+        }
+        .wrap_init_info>p{
+            font-size: 0.6rem;
+            position: absolute;
+            top: -2.25rem;
+            left: 0;
+            color: #fff;
+            left: 5px;
+        }
+        .wrap_init_info>input{
+            width: 100%;
+            height: 2.2rem;
+            background-color: #F5B823;
+            border: none;
+            border-radius: 2rem;
+            font-size: 0.8rem;
+            color: #fff;
+            -webkit-appearance: none;
+        }
+    </style>
+
+    <link rel="stylesheet" href="<?php echo $resyuming; ?>resource/css/public.css?v=<?php echo $static_v; ?>"/>
+
+    <link rel="stylesheet" href="<?php echo $resyuming; ?>resource/css/molika/media.css?v=<?php echo $static_v; ?>"/>
+    <link rel="stylesheet" href="<?php echo $resyuming; ?>resource/css/molika/weui.min.css?v=<?php echo $static_v; ?>"/>
+
+</head>
+<body>
+<div class="zpk_payorder_container">
+	<div class="zpk_payorder_wrap">
+        <div class="zpk_kuaiyin_xd_top-div">
+            <a href="javascript:;" onclick="history.go(-1);"><img src="<?php echo $resyuming; ?>resource/images/molika/new/image/back-btn.png" alt="" class="zpk_kuaiyin_xd_back-btn"></a>
+            <span class="zpk_kuaiyin_xd_title-span">订单详情</span>
+        </div>
+		<div class="zpk_kuaiyin_xd_container-div">
+            <div class="zpk_kuaiyin_xd_address-info-div">
+                <img class="zpk_kuaiyin_xd_address-info-div-top-border" src="<?php echo $resyuming; ?>resource/images/molika/new/image/address-top-border.png" alt="">
+                <div class="zpk_kuaiyin_xd_address-info-title"><span>地址信息</span></div>
+                <div class="zpk_kuaiyin_xd_address-info-container">
+                    <div class="zpk_kuaiyin_xd_address-info-conmon">
+                        <span>收货人</span><input id="weui_pay_name" type="text" value="{$contactData.name|default=''}" placeholder="收件人姓名">
+                    </div>
+                    <div class="zpk_kuaiyin_xd_address-info-conmon">
+                        <span>手机号码</span><input id="weui_pay_phone" type="text" value="{$contactData.phone|default=''}" placeholder="收件人手机号码">
+                    </div>
+                    <div class="zpk_kuaiyin_xd_address-info-conmon">
+                        <span>收货地址</span>
+                        <div id="zpk_payorder_address" class="zpk_kuaiyin_xd_shdi-div">
+                            <select id="weui_pay_province" class="prov zpk_kuaiyin_xd_form-control" name="province"></select>
+                            <select id="weui_pay_city" class="city zpk_kuaiyin_xd_form-control" name="city"></select>
+                            <select id="weui_pay_area" class="area zpk_kuaiyin_xd_form-control" name="area"></select>
+                        </div>
+                    </div>
+                    <div class="zpk_kuaiyin_xd_address-info-conmon">
+                        <span>详细街道</span><input id="weui_pay_street" value="{$contactData.street|default=''}" type="text" placeholder="详细地址">
+                    </div>
+                </div>
+            </div>
+            <div class="zpk_kuaiyin_xd_goods-info-div">
+                <div class="zpk_kuaiyin_xd_goods-info-title"><span>商品详情</span></div>
+                <div class="zpk_kuaiyin_xd_goods-info-container">
+                    <div class="zpk_kuaiyin_xd_goods-conmon">
+                        <span>商品:</span><span id="pay_photo_number"></span><span></span>
+                    </div>
+                    <div class="zpk_kuaiyin_xd_goods-conmon">
+                        <span>价格:</span><span><span class="red-prize" id="pay_photo_price"></span></span>
+                    </div>
+                    <div class="zpk_kuaiyin_xd_goods-conmon">
+                        <span>小计:</span><span class="pay_total_price"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="zpk_kuaiyin_xd_post-prise-info-div">
+                <span>邮费：</span>
+                <span>（韵达快递）￥0.0</span>
+            </div>
+            <div class="zpk_kuaiyin_xd_pay-info-div">
+                <span>支付方式：</span>
+                <span>微信支付</span>
+            </div>
+            <div class="zpk_kuaiyin_xd_pay-plus-info-div">
+                <div style="padding:10px 10px 0 19px;">说明：第一组15元（10张为一组），超过10张每张加收1元，全国包邮</div>
+            </div>
+        </div>
+        <div class="zpk_kuaiyin_xd_bottom-div">
+            <div class="zpk_kuaiyin_xd_bottom-left-div">
+                <span class="zpk_kuaiyin_xd_bottom-left-div-left">总计:<span class="pay_total_price"></span></span>
+                <!--<span class="zpk_kuaiyin_xd_bottom-left-div-right">已优惠￥5</span>-->
+            </div>
+            <div id="zpk_payorder_confirmPay" class="zpk_kuaiyin_xd_bottom-right-div">确认支付</div>
+        </div>
+	</div>
+</div>
+</body>
+
+<script>
+    var uploadCfg = {
+        province: "{$contactData.province|default=''}",
+        city : "{$contactData.city|default=''}",
+        area: "{$contactData.area|default=''}"
+    };
+</script>
+
+<script src="<?php echo $resyuming; ?>resource/js/zepto.min.js"></script>
+<script src="<?php echo $resyuming; ?>resource/js/browser.js"></script>
+
+<script src='<?php echo $resyuming; ?>resource/js/molika/cityMap.js'></script>
+<script src='<?php echo $resyuming; ?>resource/js/molika/addSelect.js'></script>
+
+<script>
+    var photo_number = '<?php echo $card_number; ?>';
+    $('#pay_photo_number').html(photo_number+'张6寸照片卡');
+    var price = 15;
+    if(photo_number > 10){
+        var overflow = photo_number - 10;
+        price += overflow;
+    }
+    $('.pay_total_price').html('￥'+price+'元');
+    $('#pay_photo_price').html('￥'+price+'元');
+
+
+    $('#zpk_payorder_confirmPay').on('click',function(e){
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            var address_info = {};
+
+            var name = $('#weui_pay_name').val();
+            if(name == ''){
+                alert('请填写收货人的姓名');
+                return false;
+            }else{
+                address_info['name'] = name;
+            }
+
+            var phone = $('#weui_pay_phone').val();
+            if(phone == ''){
+                alert('请填写收货人电话');
+                return false;
+            }else{
+                if(phone.search(/[^0-9]/) != -1){
+                    alert('输入的电话号码只能包含数字');
+                    return false;
+                }else{
+                    address_info['phone'] = phone;
+                }
+            }
+
+            var province = zpk_payorder_provinceSelect.val();
+            if(province == zpk_payorder_defaultSelect["province"] || province == "") {
+                alert("请您把订单信息填写完整.");
+                return false;
+            }else{
+                address_info['province'] = province;
+            }
+
+            var city = zpk_payorder_citySelect.val();
+            if(city == zpk_payorder_defaultSelect["city"] || city == "") {
+                alert("请您把订单信息填写完整.");
+                return false;
+            }else{
+                address_info['city'] = city;
+            }
+
+            var area = zpk_payorder_areaSelect.val();
+            if(area == zpk_payorder_defaultSelect["area"] || area == "") {
+                alert("请您把订单信息填写完整.");
+                return false;
+            }else{
+                address_info['area'] = area;
+            }
+
+            var street = $('#weui_pay_street').val();
+            if(street == "") {
+                alert("请您把订单信息填写完整.");
+                return false;
+            }else{
+                address_info['street'] = street;
+            }
+
+            var zipcode = $('#weui_pay_zipcode').val();
+            if(zipcode != "") {
+                address_info['zipcode'] = zipcode;
+            }
+
+            address_info['cid'] = <?php echo $cid; ?>;
+
+            window['$']['ajax']({
+                type: 'POST',
+                url: '/Index/Zpk/saveAddressInfo',
+                dataType: 'json',
+                data: address_info,
+                success: function(data){
+                    if(data['status'] == 1){
+                        location.href = '/Index/Zpk/pay?cid=' + address_info['cid'];
+                    }else{
+                        alert(data['content']);
+                    }
+                },
+                error: function(xhr, type){
+                    alert('保存收获信息出现错误,请稍后重试');
+                }
+            });
+    });
+
+</script>
+
+</html>
