@@ -5,19 +5,13 @@ use User\Model\UserModel;
 use User\Model\UserAuthorizeModel;
 use Message\Model\QueueModel;
 
-//define('MAIN_YUMING', 'http://www.molixiangce.com');   //主域名，动态CDN
-//define('RES_YUMING', 'http://static.molixiangce.com/'); //资源域名，静态CDN
 
-define('PIC_SERVER','http://molikuaiyin.b0.upaiyun.com');	//这个要进行区分调用，右拍云的才行
-define('PIC_WX','http://molikuaiyin.b0.upaiyun.com');       //这个要进行区分调用，微信上的才行
+define('PIC_SERVER','http://ww.cdn.com');
+define('PIC_WX','http://www.cdn.com');
 define('MAIN_YUMING', ''); //资源域名，静态CDN
 define('RES_YUMING', '/'); //资源域名，静态CDN
 define("WX_ACCESS_TOKEN", "weixin_accesstoken_kuaiyin");
 
-// define('MAIN_YUMING', 'http://99moli.ygj.com.cn/');   //99测试域名
-// define('RES_YUMING', '/'); //测试域名
-
-// 所有模块可以公用函数文件，在每个模块之前被加载
 
 // 检测是否在微信下
 function is_weixin(){

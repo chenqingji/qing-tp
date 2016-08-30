@@ -336,7 +336,7 @@ class ServiceController extends WrapController {
      * @return string
      */
     protected function getFromAppName($fromApp) {
-        $names = array(1 => "魔力快印", 2 => "淘宝", 3 => "微店", 4 => "京东");
+        $names = array(1 => "Qing", 2 => "淘宝", 3 => "微店", 4 => "京东");
         if (!array_key_exists($fromApp, $names)) {
             $fromApp = 1;
         }

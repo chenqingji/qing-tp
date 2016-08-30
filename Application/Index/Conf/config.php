@@ -264,7 +264,7 @@ return array(
     /**
      * 商品信息表 goods_type值对应名称
      */
-    "PRODUCT_NAMES" => array("2" => "快印照片", "3" => "微信书", "4" => "Lomo卡", "5" => "照片卡"),
+    "PRODUCT_NAMES" => array("2" => "Qing照片", "3" => "微信书", "4" => "Lomo卡", "5" => "照片卡"),
     /**
      * 商品进度说明
      */

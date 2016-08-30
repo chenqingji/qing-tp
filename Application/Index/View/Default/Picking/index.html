@@ -3,7 +3,7 @@
 <html lang="zh">
         <head>
                 <meta charset="utf-8" />
-                <title>打印拣货清单 - 快印物流仓储系统</title>
+                <title>打印拣货清单 - Qing物流仓储系统</title>
                 <meta name="description"
                       content="starry network" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -209,12 +209,12 @@
                         $("#pickbarcode").barcode(pickId, "code128", {barWidth: 1, barHeight: 30});
                         $("#pickbarcode").children("div").last().css({clear:""});
                         barcodehtml = $("#pickbarcode").html();           
-//                        barcodehtml = '<style>div{font-size:14px;}</style><div><div>姓名：陈清基&nbsp;&nbsp;手机号：13559277736&nbsp;&nbsp;来源：魔力快印 </div>';
+//                        barcodehtml = '<style>div{font-size:14px;}</style><div><div>姓名：陈清基&nbsp;&nbsp;手机号：13559277736&nbsp;&nbsp;来源：Qing </div>';
                 }
         
                 function gotoprint() {
                         CNPrint = getCaiNiaoPrint(document.getElementById('CaiNiaoPrint_OB'), document.getElementById('CaiNiaoPrint_EM'));
-                        CNPrint.PRINT_INITA("2mm", 0, "100mm", "180mm", "快印物流打印拣货单任务"); //菜鸟电子面单打印任务
+                        CNPrint.PRINT_INITA("2mm", 0, "100mm", "180mm", "Qing物流打印拣货单任务"); //菜鸟电子面单打印任务
                         CNPrint.SET_PRINT_IDENTITY("AppKey={$cainiao_appkey}&Seller_ID={$cainiao_sellid}");
                         CNPrint.ADD_PRINT_IMAGE(2,19,155,47, moliLogo);
                         CNPrint.SET_PRINT_STYLEA(0, "Stretch", 2);

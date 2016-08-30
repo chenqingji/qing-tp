@@ -213,7 +213,7 @@ class OrderController extends WrapController {
         switch ($type) {
             case "from":
                 $selectString = ":选择来源;";
-                $fromArray = array(1 => "快印平台", 2 => "淘宝", 3 => "微店");
+                $fromArray = array(1 => "Qing平台", 2 => "淘宝", 3 => "微店");
                 foreach ($fromArray as $index => $one) {
                     $selectString .= $index . ":" . $one . ";";
                 }
@@ -557,7 +557,7 @@ class OrderController extends WrapController {
     }
 
     /**
-     * 添加定制品订单 （快印内部下单入口）
+     * 添加定制品订单 （Qing内部下单入口）
      */
     public function addCustom() {
         header("Location:" . U("/Index/Admin/newOrder"));

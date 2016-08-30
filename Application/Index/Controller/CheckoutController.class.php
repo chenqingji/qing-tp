@@ -41,7 +41,7 @@ class CheckoutController extends ServiceController {
             'seller_id' => $this->sellid,
             'cp_code' => $this->mailType,
             'product_type' => "标准快件",
-            'send_name' => "魔力快印官方店",
+            'send_name' => "Qing官方店",
             'send_phone' => "15960812280",
             'shipping_address' => "福建省厦门市海沧区海沧东孚浦头路9号",
             'ext_send_date' => date("Y-m-d", time()),

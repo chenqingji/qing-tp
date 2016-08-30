@@ -500,7 +500,7 @@ class ExpressController extends ServiceController {
         $trade_order_info_cols->consignee_address = $consignee_address;
         $trade_order_info_cols->send_phone = "15960812280";
         // $trade_order_info_cols->weight="1"; //TODO 重量？
-        $trade_order_info_cols->send_name = "魔力快印官方店";
+        $trade_order_info_cols->send_name = "Qing官方店";
         $package_items = new \PackageItem ();
         $package_items->item_name = "印刷品";
         $package_items->count = "1";

@@ -29,9 +29,9 @@ function setsharedata(title,link,img){
 
 function refreshWxShareData(){
     // 2.1 监听“分享给朋友”，按钮点击、自定义分享内容及分享结果接口
-	var share_title = wxConfig.share_title == ''?"魔力快印":wxConfig.share_title;
-    var send_desc = wxConfig.share_title == '' ? '亲，我在“魔力快印”打印了一些精美照片，您也来试试吧！' : wxConfig.share_title;
-    var share_desc = wxConfig.share_desc == '' ?'亲，我在“魔力快印”打印了一些精美照片，您也来试试吧！' : wxConfig.share_desc;
+	var share_title = wxConfig.share_title == ''?"Qing":wxConfig.share_title;
+    var send_desc = wxConfig.share_title == '' ? '亲，我在“Qing”打印了一些精美照片，您也来试试吧！' : wxConfig.share_title;
+    var share_desc = wxConfig.share_desc == '' ?'亲，我在“Qing”打印了一些精美照片，您也来试试吧！' : wxConfig.share_desc;
     
     wx.onMenuShareAppMessage({
         title   : share_title,
