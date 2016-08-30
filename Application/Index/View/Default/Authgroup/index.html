@@ -1,0 +1,355 @@
+<style>
+        .parent-checkbox{
+                font-weight: 800;
+        }
+        .child-checkbox-div{
+                margin-left: 50px;
+        }
+        .child-checkbox{
+                padding: 5px;
+        }
+</style>  
+<div class="page-content">
+        <div class="page-header">
+                <h1>
+                        用户组列表
+                </h1>
+        </div><!-- /.page-header -->
+
+        <div class="row">
+                <div id="page_content_div" class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <!--<div id="grid-pager1" class='grid-pager-div'></div>-->
+
+                        <table id="grid-table"></table>
+
+                        <div id="grid-pager" class='grid-pager-div'></div>
+
+                        <script type="text/javascript">
+                                var $path_base = "/"; //this will be used in gritter alerts containing images
+                        </script>
+
+                        <!-- PAGE CONTENT ENDS -->
+                </div><!-- /.col -->
+        </div><!-- /.row -->
+</div><!-- /.page-content -->
+
+
+<div id="products_modal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                        <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">分配权限</h4>
+                                <input type="hidden" name="group_id" id="group_id" value="">
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                        <div class="modal-footer">
+                                <button id="to_update_btn" type="button" class="btn btn-success" data-dismiss="modal">更新</button>
+                                <button id="to_close_btn" type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        </div>
+                </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script src="/Public/js/wh/jqGrid/jquery.jqGrid.min.js"></script>
+<script src="/Public/js/wh/jqGrid/i18n/grid.locale-zh.js"></script>
+<script src="/Public/js/wh/validate.js"></script>
+<script src="/Public/js/wh/validata_message.js"></script>
+<script src="/Public/js/wh/validata_metadata.js"></script>
+<script src="/Public/js/wh/whlist.js"></script>
+<script type="text/javascript">
+var validate_rules = {
+        //debug:true,
+        rules: {
+                title: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 16
+                },
+                status: {
+                        required: true
+                }
+        }
+};
+var grid_selector = "#grid-table";
+var pager_selector = "#grid-pager";
+var status = '';
+var getSelectData = function (type) {
+        var data = '';
+        if (type == "status" && status !== '') {
+                return status;
+        }
+        $.ajax({
+                type: "post",
+                url: "/Index/Authgroup/getSelectData",
+                data: "type=" + type,
+                async: false,
+                success: function (e) {
+                        if (e != null) {
+                                data = e;
+                                if (type == "status") {
+                                        status = data;
+                                }
+                        }
+                }
+        });
+        return data;
+};
+
+
+var myacFormatter = function (cellvalue, options, rowObject) {
+        var ruleBtn = '<button style="float:left;margin:3px;" class="btn-xs btn-success" onclick="allotRule(' + rowObject.id + ',\'' + rowObject.title +  '\')">分配权限</button>';
+        return ruleBtn;// + "&nbsp;&nbsp;&nbsp;\t"+ detail;
+};
+var selectall = function(parentCheckbox){
+        var checkFlag = $(parentCheckbox).prop("checked");
+        $(parentCheckbox).next("div").find("input.child-checkbox").prop("checked",checkFlag);        
+}
+var allotRule = function (id, title) {
+        $("div.modal-body").html('');                        
+        $(".ui-widget-overlay").hide();
+        $("#viewmodgrid-table").hide();
+        $.ajax({
+                type: 'post',
+                url: "/Index/Authgroup/getAllRules",
+                data:"id="+id ,
+                dataType: 'json',
+                success: function (res) {
+                        if (1 === res.status) {
+                                var parentCheckbox = '';                                                                        
+                                if(res.data){
+                                        var rules = res.data;
+                                        for(key in rules){
+                                                var checkedProp = '';                                                
+                                                if(rules[key]['self']['checked']){
+                                                        checkedProp = ' checked=true ';
+                                                }
+                                                var parentCheckbox = '<input class="parent-checkbox" name="authids" '+checkedProp+' type="checkbox" onclick="selectall(this)" value="'+rules[key]['self']['id']+'" />'+rules[key]['self']['title'];
+                                                var childrenRules = rules[key]['list'];
+                                                var childrenCheckbox = '';
+                                                for(num in childrenRules){
+                                                        var childCheckedProp = '';                                                
+                                                        if(childrenRules[num]['checked']){
+                                                                childCheckedProp = ' checked=true ';
+                                                        }                                                        
+                                                        childrenCheckbox += '<input class="child-checkbox" name="authids" '+childCheckedProp+' type="checkbox" value="'+childrenRules[num]['id']+'" />'+childrenRules[num]['title'];
+                                                }
+                                                var allFormGroupHtml = '<div class="form-group">'+parentCheckbox+'<div class="child-checkbox-div">'+childrenCheckbox+"</div></div>";
+                                                $("#products_modal div.modal-body").append(allFormGroupHtml);
+                                                delete allFormGroupHtml;
+                                        }
+                                }
+                        }else{
+                                $("div.row").fn_tips("warning", 'exclamation', res.data);
+                        }
+                }
+        });
+        $("#group_id").val(id);
+        $(".modal-title").html("【"+title+"】"+"权限分配");
+        $('#products_modal').modal();
+};
+
+jQuery(function ($) {
+        $("#to_update_btn").on("click",function(){
+                var allCheckboxVal = '';
+                $("#products_modal div.modal-body").find("input:checked").each(function(i){
+                        var curVal = $(this).val();
+                        allCheckboxVal += curVal+",";
+                });
+//                console.log(allCheckboxVal);return false;
+                var id = $("#group_id").val();
+                $.ajax({
+                        url:"/Index/Authgroup/updateRules",
+                        type:"post",
+                        data:"rules="+allCheckboxVal+"&id="+id,
+                        dataType:"json",
+                        success: function (res) {
+                                if (1 === res.status) {
+                                        $("div.row").fn_tips("success", 'ok', res.data);
+                                }else{
+                                        $("div.row").fn_tips("warning", 'exclamation', res.data);
+                                }
+                        },
+                        error: function () {
+                                $("div.row").fn_tips("warning", 'exclamation', '更新权限失败，请重新操作或联系管理员');
+                        }
+                });
+        });        
+        
+        jQuery(grid_selector).jqGrid({
+                //direction: "rtl",
+                jsonReader: {
+                        root: "rows",
+                        page: "currpage",
+                        total: "totalpages",
+                        records: "totalrecords",
+                        repeatitems: false,
+                        id: "0",
+                        userdata: "userdata"
+
+                },
+                //data: grid_data,
+                mtype: "POST",
+                url: "/Index/Authgroup/getListData",
+                editurl: "/Index/Authgroup/operation",
+                datatype: "json",
+                colNames: ['ID', '用户组名称', '状态', '创建时间', '更新时间', '操作'],
+                colModel: [
+                        {name: 'id', index: 'id', width: 60, sortable: true, editable: false},
+                        {name: 'title', index: 'title', width: 60, sortable: false, editable: true},
+                        {name: 'status', index: 'status', width: 60, sortable: false, editable: true, stype: "select", searchoptions: {value: getSelectData("status")}, edittype: "select", editoptions: {value: getSelectData("status")}, formatter: 'select'},
+                        {name: 'create_time', index: 'create_time', width: 60, sortable: true, editable: false, formatter: "date",
+                                formatoptions: {srcformat: 'u', newformat: "Y-m-d H:i:s"}},
+                        {name: 'update_time', index: 'update_time', width: 60, sortable: true, editable: false, formatter: "date",
+                                formatoptions: {srcformat: 'u', newformat: "Y-m-d H:i:s"}},
+                        {name: 'myac', index: '', width: 80, fixed: true, sortable: false, resize: true, search: false,
+                                formatter: myacFormatter
+                        }
+                ],
+                viewrecords: true,
+                rowNum: 10,
+                rowList: [10, 20, 30],
+                pager: pager_selector,
+                altRows: true,
+                //toppager: true,
+
+                multiselect: true,
+                //multikey: "ctrlKey",
+                multiboxonly: true,
+                loadComplete : function(res) {
+                        if(res.status == 0){
+                                fn_info_tips("warning", "remove", res.data,0);
+                        }
+                        var table = this;
+                        setTimeout(function () {
+                                styleCheckbox(table);
+                                updateActionIcons(table);
+                                updatePagerIcons(table);
+                                enableTooltips(table);
+                        }, 0);
+                },
+                loadtext: "数据加载中...",
+                caption: "用户组列表",
+                autowidth: true,
+                height: "100%"
+        });
+        //enable search/filter toolbar
+        //jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch:true,stringResult:true})
+        //navButtons
+        jQuery(grid_selector).jqGrid('navGrid', pager_selector,
+                {
+                        //navbar options
+                        edit: true,
+                        editicon: 'icon-pencil blue',
+                        add: true,
+                        addicon: 'icon-plus-sign purple',
+                        del: false,
+                        delicon: 'icon-trash red',
+                        search: true,
+                        searchicon: 'icon-search orange',
+                        refresh: true,
+                        refreshicon: 'icon-refresh green',
+                        view: true,
+                        viewicon: 'icon-zoom-in grey',
+                },
+                {
+                        //edit record form
+                        width: 500,
+                        //height:600,
+                        left: ($(window).width() - 500) / 2,
+                        top: ($(window).height()) / 4,
+                        editCaption: "编辑用户组",
+                        bSubmit: "保存",
+                        bCancel: "取消",
+                        closeAfterEdit: true,
+                        recreateForm: true,
+                        beforeSubmit: fn_beforeEditSubmit,
+                        afterSubmit: fn_editSubmit,
+                        beforeShowForm: function (e) {
+                                var form = $(e[0]);
+                                form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');
+                                style_edit_form(form, validate_rules);
+                        }
+                },
+                {
+                        //new record form
+                        width: 500,
+                        //height:600,
+                        left: ($(window).width() - 500) / 2,
+                        top: ($(window).height()) / 4,
+                        addCaption: "新增用户组",
+                        bSubmit: "保存",
+                        bCancel: "取消",
+                        closeAfterAdd: true,
+                        recreateForm: true,
+                        viewPagerButtons: false,
+                        afterSubmit: fn_addSubmit,
+                        beforeShowForm: function (e) {
+                                var form = $(e[0]);
+                                form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');
+                                style_edit_form(form, validate_rules);
+                        }
+                },
+                {
+                        //delete record form
+                        left: ($(window).width()) / 2,
+                        top: ($(window).height()) / 4,
+                        delCaption: "删除用户组",
+                        bSubmit: "删除",
+                        bCancel: "取消",
+                        closeAfterDel: true,
+                        recreateForm: true,
+                        afterSubmit: fn_delSubmit,
+                        beforeShowForm: function (e) {
+                                var form = $(e[0]);
+                                if (form.data('styled'))
+                                        return false;
+                                form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');
+                                style_delete_form(form);
+                                form.data('styled', true);
+                        },
+                        onClick: function (e) {
+                                alert(1);
+                        }
+                },
+                {
+                        //search form
+                        width: 500,
+                        //height:600,
+                        left: ($(window).width() - 500) / 2,
+                        top: ($(window).height()) / 4,
+                        recreateForm: true,
+                        closeAfterSearch: true,
+                        sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'bw', 'bn', 'in', 'ni', 'ew', 'en', 'cn', 'nc'],
+                        afterShowSearch: function (e) {
+                                var form = $(e[0]);
+                                form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />');
+                                style_search_form(form);
+                        },
+                        afterRedraw: function () {
+                                style_search_filters($(this));
+                        },
+                        multipleSearch: true,
+                        /**
+                         multipleGroup:true,
+                         showQuery: true
+                         */
+                },
+                {
+                        //view record form
+                        width: 500,
+                        //height:600,
+                        left: ($(window).width() - 500) / 2,
+                        top: ($(window).height()) / 4,
+                        recreateForm: true,
+                        beforeShowForm: function (e) {
+                                var form = $(e[0]);
+                                form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />');
+                                $("#trv_myac").remove();
+                        },
+                }
+        );
+        //var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');     
+});
+</script>

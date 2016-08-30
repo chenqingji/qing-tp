@@ -6,7 +6,7 @@ use User\Model\UserModel;
 use Think\Controller;
 class BaseController extends Controller {
     protected $user_id = 0;
-    protected $static_v = '105';
+    protected $static_v = '92';
     protected $minUploadPicCount = 1;
 
     protected $orderStatus = array(
@@ -47,7 +47,6 @@ class BaseController extends Controller {
             && $hashValue[1] == md5($hashValue[0].'-moli-jdui-'.$hashValue[0])) {
 
             // 检测用户是否真实存在
-
             $userInfo = $this->getUserInfo($hashValue[0]);
             if($userInfo) {
                 $uid = $hashValue[0];

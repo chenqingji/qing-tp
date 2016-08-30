@@ -1,0 +1,389 @@
+<!--<link rel="stylesheet" href="/Public/css/datepicker.css" />-->
+<div class="page-content">
+        <div class="page-header">
+                <h1>
+                        订单商品列表
+                </h1>
+        </div><!-- /.page-header -->
+
+        <div class="row">
+                <div id="page_content_div" class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <!--<div id="grid-pager1" class='grid-pager-div'></div>-->
+
+                        <table id="grid-table"></table>
+
+                        <div id="grid-pager" class='grid-pager-div'></div>
+
+                        <script type="text/javascript">
+                                var $path_base = "/"; //this will be used in gritter alerts containing images
+                        </script>
+
+                        <!-- PAGE CONTENT ENDS -->
+                </div><!-- /.col -->
+        </div><!-- /.row -->
+</div><!-- /.page-content -->
+
+<div id="products_modal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">订单号：看无</h4>
+      </div>
+        <div class="modal-body no-padding">
+                <table class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
+                        <thead>
+                                <tr>
+                                        <th>ID</th>
+                                        <th>商品编码</th>
+                                        <th>商品名称</th>
+                                        <th>商品数量</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                        <td>~~也如空空</td>
+                                        <td>,，,，,</td>
+                                        <td>可能请求</td>
+                                        <td>拿不到数据</td>                                        
+                                </tr>
+                        </tbody>
+                </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+<!--<script src="/Public/js/bootstrap-datepicker.min.js"></script>-->
+<script src="/Public/js/wh/jqGrid/jquery.jqGrid.min.js"></script>
+<script src="/Public/js/wh/jqGrid/i18n/grid.locale-zh.js"></script>
+<script src="/Public/js/wh/validate.js"></script>
+<script src="/Public/js/wh/validata_message.js"></script>
+<script src="/Public/js/wh/validata_metadata.js"></script>
+<!--<script src="/Public/js/wh/bootbox.min.js"></script>-->
+<script src="/Public/js/wh/whlist.js"></script>
+<script type="text/javascript">        
+var validate_rules = {
+        //debug:true,
+        rules:{
+                code:{
+                        required:true,
+                        minlength:3,
+                        maxlength:16
+                },
+                name:{
+                        required:true,
+                        minlength:3,
+                        maxlength:16
+                },
+                price:{
+                        required:true,
+                        number:true,
+                        min:0,
+                        max:100
+                },
+                weight:{
+                        number:true,
+                        min:0,
+                        max:10000
+                },
+                shelf:{
+//                                remote:"checkShelf.php",
+                         minlength:1,
+                         maxlength:16
+                },
+                start:{
+                        minlength:3,
+                        maxlength:16
+                },
+                max:{
+                        number:true,
+                        min:0,
+                        max:10000
+                }
+        }
+};
+<empty name="order_id">
+var jqgridUrl = '/Index/Order/getProductListData';
+<else />
+var jqgridUrl = '/Index/Order/getProductListData?fromorderid='+{$order_id};
+</empty> 
+var grid_selector = "#grid-table";
+var pager_selector = "#grid-pager";
+var goodsData = '';
+var processData = '';
+var statusData = '';
+var getSelectData = function (type) {
+        var data = '';
+        if(type == "goods" && goodsData !== ''){
+                return goodsData
+        }else if(type== "process" && processData!==""){
+                return processData;
+        }else if(type== "status" && statusData!==""){
+                return statusData;
+        }
+        $.ajax({
+                type:"post",
+                url: "/Index/Order/getSelectData",
+                data:"type="+type,
+                async: false,
+                success: function (e) {
+                        if (e != null) {
+                               data = e;
+                               if(type=="goods"){
+                                       goodsData = data;
+                               }else if(type=="process"){
+                                       processData = data;
+                               }else if(type=="status"){
+                                       statusData = data;
+                               }
+                        }
+                }
+        });
+        return data;
+}; 
+
+var myacFormatter = function(cellvalue,options,rowObject){
+        var resetBtn = '<button style="float:left;margin:3px;" class="btn-xs btn-success" onclick="resetProduct('+ rowObject.id + ',' + rowObject.uid + ',\'' + rowObject.product_id + '\')">重置</button>';
+        var cancelBtn = '<button style="float:left;margin:3px;" class="btn-xs btn-danger" onclick="cancelProduct('+ rowObject.id + ',' + rowObject.uid + ',\'' + rowObject.product_id + '\')">取消</button>';
+        var rtn = '';
+        if(rowObject.status & 1 == 1){
+                rtn += cancelBtn;
+                if(rowObject.goods_type != 1){
+                        rtn+=resetBtn;
+                }                
+        }else{
+                rtn = '&nbsp;&nbsp;-';
+        }
+        return rtn;
+};
+var cancelProduct = function (id,uid,product_id){
+  if(confirm("取消后，商品将不会被寄出，确定取消吗")){
+        $.ajax({
+                type:'post',
+                url:"/Index/Order/cancelProduct",
+                data:"id="+id+"&uid="+uid+"&product_id="+product_id,
+                dataType:'json',
+                success:function(res){
+                        if(1 === res.status){
+                                jQuery(grid_selector).jqGrid('setRowData', id, {
+                                      status : 0
+                                });                                
+                                fn_info_tips("success", "ok", res.data,0);
+                        }else{
+                                fn_info_tips("warning", "remove", res.data,0);
+                        }
+                }
+        });
+  }          
+return [true,""];        
+};
+var resetProduct = function(id,uid,product_id){
+  if(confirm("重置后，商品数据将回到下单时的状态，确定重置吗")){
+        $.ajax({
+                type:'post',
+                url:"/Index/Order/resetProduct",
+                data:"id="+id+"&uid="+uid+"&product_id="+product_id,
+                dataType:'json',
+                success:function(res){
+                        if(1 === res.status){
+                                jQuery(grid_selector).jqGrid('setRowData', id, {
+                                      process : 0
+                                });                                
+                                fn_info_tips("success", "ok", res.data,0);
+                        }else{
+                                fn_info_tips("warning", "remove", res.data,0);
+                        }
+                }
+        });
+  }          
+return [true,""];
+};
+jQuery(function ($) {
+        jQuery(grid_selector).jqGrid({
+                //direction: "rtl",
+                jsonReader: {
+                        root: "rows",
+                        page: "currpage",
+                        total: "totalpages",
+                        records: "totalrecords",
+                        repeatitems: false,
+                        id: "0",
+                        userdata: "userdata"
+
+                },
+                //data: grid_data,
+                mtype: "POST",
+//                url: "/Index/Order/getProductListData",
+                url:jqgridUrl,
+                editurl: "/Index/Order/productOperation",
+                datatype: "json",
+                colNames: ['ID','商品编号', '订单ID', '订单号', '商品类型', '商品ID', '数量',  '用户ID', '状态', 'uhash', '进度', '创建时间', '更新时间', '操作'],
+                colModel: [
+                        {name: 'id', index: 'id', width: 60, sortable: true, editable: false},
+                        {name: 'product_id', index: 'product_id', width: 60, sortable: true, editable: false},
+                        {name: 'order_id', index: 'order_id', width: 60, sortable: false, editable: false},
+                        {name: 'orderno', index: 'orderno', width: 60, sortable: false, editable: false},
+                        {name: 'goods_type', index: 'goods_type', width: 60, sortable: true, editable: false,stype: "select", searchoptions: {value: getSelectData("goods")}, edittype: "select", editoptions: {value: getSelectData("goods")},formatter:"select"},
+                        {name: 'goods_id', index: 'goods_id', width: 60, sortable: false, editable: false},
+                        {name: 'count', index: 'count', width: 60, sortable: true, editable: true},
+                        {name: 'uid', index: 'uid', width: 60, sortable: false, editable: true},
+                        {name: 'status', index: 'status', width: 60, sortable: true, editable: true, stype: "select", searchoptions: {value: getSelectData("status")}, edittype: "select", editoptions: {value: getSelectData("status")},formatter:"select"},
+                        {name: 'uhash', index: 'uhash', width: 60, sortable: false, editable: false},
+                        {name: 'process', index: 'process', width: 60, sortable: true, editable: true, stype: "select", searchoptions: {value: getSelectData("process")}, edittype: "select", editoptions: {value: getSelectData("process")},formatter:"select"},
+                        {name: 'create_time', index: 'create_time',width: 60, sortable: true, editable: false},
+                        {name: 'update_time', index: 'update_time',width: 60, sortable: true, editable: false},
+                        {name: 'myac', index: '', width: 80, fixed: true, sortable: false, resize: false, search: false,
+                                formatter: myacFormatter,
+                        }
+                ],
+                viewrecords: true,
+                rowNum: 10,
+                rowList: [10, 20, 30],
+                pager: pager_selector,
+                altRows: true,
+                //toppager: true,
+
+                multiselect: true,
+                //multikey: "ctrlKey",
+                multiboxonly: true,
+                loadComplete : function(res) {
+                        if(res.status == 0){
+                                fn_info_tips("warning", "remove", res.data,0);
+                        }
+                        var table = this;
+                        setTimeout(function () {
+                                styleCheckbox(table);
+                                updateActionIcons(table);
+                                updatePagerIcons(table);
+                                enableTooltips(table);
+                        }, 0);
+                },
+                loadtext: "数据加载中...",
+                caption: "订单商品列表",
+                autowidth: true,
+                height: "100%"
+        });
+        //enable search/filter toolbar
+        //jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch:true,stringResult:true})
+        //navButtons
+        jQuery(grid_selector).jqGrid('navGrid', pager_selector,
+                {
+                        //navbar options
+                        edit: false,
+                        editicon: 'icon-pencil blue',
+                        add: false,
+                        addicon: 'icon-plus-sign purple',
+                        del: false,
+                        delicon: 'icon-trash red',
+                        search: true,
+                        searchicon: 'icon-search orange',
+                        refresh: true,
+                        refreshicon: 'icon-refresh green',
+                        view: true,
+                        viewicon: 'icon-zoom-in grey',
+                },
+                {
+                        //edit record form
+                        width: 500,
+//                                height:600,
+                        left: ($(window).width() - 500) / 2,
+                        top: ($(window).height()) / 4,
+                        editCaption: "编辑",
+                        bSubmit: "保存",
+                        bCancel: "取消",
+                        closeAfterEdit: true,
+                        recreateForm: true,
+                        afterSubmit: fn_editSubmit,
+                        beforeShowForm: function (e) {
+                                var form = $(e[0]);
+                                form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');
+                                style_edit_form(form,validate_rules);
+                        }
+                },
+                {
+                        //new record form
+                        width: 500,
+//                                height:600,
+                        left: ($(window).width() - 500) / 2,
+                        top: ($(window).height()) / 4,
+                        addCaption: "新增",
+                        bSubmit: "保存",
+                        bCancel: "取消",
+                        closeAfterAdd: true,
+                        recreateForm: true,
+                        viewPagerButtons: false,
+                        afterSubmit: fn_addSubmit,
+                        beforeShowForm: function (e) {
+                                var form = $(e[0]);
+                                form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');
+                                style_edit_form(form,validate_rules);
+                        }
+                },
+                {
+                        //delete record form
+                        left: ($(window).width()) / 2,
+                        top: ($(window).height()) / 4,
+                        delCaption: "删除",
+                        bSubmit: "删除",
+                        bCancel: "取消",
+                        closeAfterDel: true,
+                        recreateForm: true,
+                        afterSubmit: fn_delSubmit,
+                        beforeShowForm: function (e) {
+                                var form = $(e[0]);
+                                if (form.data('styled'))
+                                        return false;
+                                form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');
+                                style_delete_form(form);
+                                form.data('styled', true);
+                        },
+                        onClick: function (e) {
+                                alert(1);
+                        }
+                },
+                {
+                        //search form
+                        width: 500,
+//                                height:600,
+                        left: ($(window).width() - 500) / 2,
+                        top: ($(window).height()) / 4,
+                        recreateForm: true,
+                        closeAfterSearch: true,
+                        sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'bw', 'bn', 'in', 'ni', 'ew', 'en', 'cn', 'nc'],
+                        afterShowSearch: function (e) {
+                                var form = $(e[0]);
+                                form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />');
+                                style_search_form(form);
+                        },
+                        afterRedraw: function () {
+                                style_search_filters($(this));
+                        },
+                        multipleSearch: true,
+                        /**
+                         multipleGroup:true,
+                         showQuery: true
+                         */
+                },
+                {
+                        //view record form
+                        width: 500,
+//                                height:600,
+                        left: ($(window).width() - 500) / 2,
+                        top: ($(window).height()) / 4,
+                        recreateForm: true,
+                        beforeShowForm: function (e) {
+                                var form = $(e[0]);
+                                form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />');
+                                $("#trv_myac").remove();
+                        }
+                }
+        );
+});
+</script>

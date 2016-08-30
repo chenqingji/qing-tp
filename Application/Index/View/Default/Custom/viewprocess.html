@@ -1,0 +1,140 @@
+{__NOLAYOUT__} 
+<!DOCTYPE html>
+<html lang="zh">
+        <head>
+                <meta charset="utf-8" />
+                <title>查看商品仓储进度 - 快印物流仓储系统</title>
+                <meta name="description"
+                      content="starry network" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <!--basic styles-->
+                <link href="/Public/css/wh/bootstrap.min.css" rel="stylesheet" />
+                <link rel="stylesheet" href="/Public/css/wh/font/css/font-awesome.min.css" />
+                <!--[if IE 7]>
+                            <link rel="stylesheet" href="/Public/css/wh/font/css/font-awesome-ie7.min.css" />
+                        <![endif]-->
+                <!--ace styles-->
+                <link rel="stylesheet" href="/Public/css/wh/jquery-ui-1.10.3.custom.min.css" />
+                <!--<link rel="stylesheet" href="/Public/css/wh/ace.min.css" />-->
+                <!--[if !IE]>-->
+                <script type="text/javascript">
+                        window.jQuery || document.write("<script src='/Public/js/wh/jquery-2.0.3.min.js'>" + "<" + "/script>");
+                </script>
+                <!--<![endif]-->
+                <!--[if IE]>
+                           <script type="text/javascript">
+                               window.jQuery || document.write("<script src='/Public/js/wh/jquery-1.10.2.min.js'>" + "<" + "/script>");
+                           </script>
+                    <![endif]-->
+
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <style>
+                        div.row{display:none;}
+                        body{background-color:white;}
+                </style>
+        </head>
+        <body>
+                <div class="page-content">
+                        <div class="page-header position-relative">
+                                <h3>查看商品仓储进度</h3>
+                        </div>
+                        <div class="col-xs-12">
+                                <div id="custom_viewprocess" class="form-horizontal">   
+                                        <div class="form-group">
+                                                <!--<label class="col-sm-3 control-label no-padding-right" for="operator"> 员工 </label>-->
+                                                <div class="col-sm-9">
+                                                        <input type="hidden" id="the_operator" name="operator" placeholder="员工识别" class="col-xs-10 col-sm-5" />
+                                                </div>
+                                        </div>     
+                                        <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="product_id"> 商品编号 </label>
+                                                <div class="col-sm-9">
+                                                        <input type="text" id="the_product_id" name="product_id" placeholder="商品编号识别" class="col-xs-10 col-sm-5" />
+                                                        &nbsp;&nbsp;
+                                                        <button class="btn-primary btn-sm" id="search_btn" type="button">
+                                                                查询
+                                                        </button>                                                  
+                                                </div>
+                                        </div> 
+                                </div>
+                        </div>                         
+
+                        <div style="margin-bottom: 50px;"></div>
+                        <div id="viewprocess-div" class="col-xs-12">
+                                <div class="row">
+                                        <div class="table-responsive">
+                                                <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                                                        <thead>
+                                                                <tr>
+                                                                        <th>商品编号</th>
+                                                                        <th>进度</th>
+                                                                        <th>入库时间</th>
+                                                                        <th>入库位置</th>
+                                                                        <th>入库操作人</th>
+                                                                        <th>拣货时间</th>
+                                                                        <th>拣货单号</th>
+                                                                        <th>拣货操作人</th>
+                                                                        <th>出库时间</th>
+                                                                        <th>电子面单号</th>
+                                                                        <th>出库操作人</th>
+                                                                </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                                <!--tbody-->
+                                                        </tbody>
+                                                </table>
+                                        </div><!-- /.table-responsive -->
+                                </div>
+                        </div>
+                </div>
+                <script type="text/javascript">
+                        window.jQuery || document.write("<script src='/Public/js/wh/jquery-2.0.3.min.js'>" + "<" + "/script>");
+                </script>
+                <!--basic scripts-->
+                <script src="/Public/js/wh/bootstrap.min.js"></script>
+                <!--page specific plugin scripts-->
+                <script src="/Public/js/wh/jquery-ui-1.10.3.custom.min.js"></script>                  
+                <script src="/Public/js/wh/wh.js"></script>   
+                <script>
+                        $(document).ready(function () {
+                                $("#the_product_id").keyup(function(event){
+                                    if(event.keyCode == 13 || event.which == 13){
+                                        toViewProcess();
+                                    }
+                                });                                 
+                                
+                                $("#search_btn").click(function () {
+                                        toViewProcess();
+                                });
+                        });
+                        
+                        var toViewProcess = function(){
+                                var operator = $("#the_operator").val();
+                                var productId = $("#the_product_id").val();
+                                $.ajax({
+                                        type: "post",
+                                        url: "/Index/Custom/viewProcess",
+                                        data: "productId=" + productId + "&operator=" + operator,
+                                        dataType: "json",
+                                        error: function (res) {
+                                                $("#viewprocess-div").fn_tips("warning", "exclamation", "请求失败，请重新操作或联系管理员");
+                                                return false;
+                                        },
+                                        success: function (res) {
+                                                if (res.status === 1 && res.data != '') {
+                                                        $("div.row").show();
+                                                        $("tbody").append(res.data);
+                                                } else if (res.data == '') {
+                                                        $("#viewprocess-div").fn_tips("warning", "exclamation", "没有找到相关记录信息");
+                                                } else {
+                                                        $("#viewprocess-div").fn_tips("warning", "exclamation", res.data);
+                                                }
+                                                return true;
+                                        }
+                                });                                
+                        };
+                </script>
+        </body>
+</html>
+

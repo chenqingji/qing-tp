@@ -1,0 +1,177 @@
+{__NOLAYOUT__} 
+<!DOCTYPE html>
+<html lang="zh">
+        <head>
+                <meta charset="utf-8" />
+                <title>普通商品入库 - 快印物流仓储系统</title>
+                <meta name="description"
+                      content="starry network" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <!--basic styles-->
+                <link href="/Public/css/wh/bootstrap.min.css" rel="stylesheet" />
+                <link rel="stylesheet" href="/Public/css/wh/font/css/font-awesome.min.css" />
+                <!--[if IE 7]>
+                            <link rel="stylesheet" href="/Public/css/wh/font/css/font-awesome-ie7.min.css" />
+                        <![endif]-->
+                <!--ace styles-->
+                <link rel="stylesheet" href="/Public/css/wh/jquery-ui-1.10.3.custom.min.css" />
+                <!--[if !IE]>-->
+                <script type="text/javascript">
+                        window.jQuery || document.write("<script src='/Public/js/wh/jquery-2.0.3.min.js'>" + "<" + "/script>");
+                </script>
+                <!--<![endif]-->
+                <!--[if IE]>
+                           <script type="text/javascript">
+                               window.jQuery || document.write("<script src='/Public/js/wh/jquery-1.10.2.min.js'>" + "<" + "/script>");
+                           </script>
+                    <![endif]-->
+
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        </head>
+        <body>
+                <div class="page-content">
+                        <div class="page-header position-relative">
+                                <h3>普通商品入库</h3>
+                        </div>
+
+                        <div class="row">
+                                <div class="col-xs-12">    
+                                        <form id="add_normal" class="form-horizontal" method="post" role="form" action="/Index/Normal/toPutIn">   
+                                                <div class="form-group">
+                                                        <label class="col-sm-3 control-label no-padding-right" for="category_shelf"> 商品编号 </label>
+                                                        <div class="col-sm-9">
+                                                                <select id="shelf_select" name="cid" class="col-xs-10 col-sm-5">
+                                                                        <option value="">选择商品</option>
+                                                                        <foreach name="categoryIds" item="one" key="cid">
+                                                                                <option value="{$one['category_id']}">{$one['category_id']}({$one['category_name']})</option>                                                        
+                                                                        </foreach>
+                                                                </select>
+                                                        </div>
+                                                </div>        
+                                                <div class="form-group">
+                                                        <!--<label class="col-sm-3 control-label no-padding-right" for="operator"> 员工 </label>-->
+                                                        <div class="col-sm-9">
+                                                                <present name="sceneData">
+                                                                        <input type="hidden" id="the_operator" name="operator" placeholder="员工识别" class="col-xs-10 col-sm-5" value="{$sceneData['operator']|default=''}" />
+                                                                        <else />
+                                                                        <input type="hidden" id="the_operator" name="operator" placeholder="员工识别" class="col-xs-10 col-sm-5" />
+                                                                </present>
+                                                        </div>
+                                                </div>                                  
+                                                <div class="form-group">
+                                                        <label class="col-sm-3 control-label no-padding-right" for="in_count"> 本次入库数量 </label>
+                                                        <div class="col-sm-9">
+                                                                <present name="sceneData">
+                                                                        <input type="text" id="in_count" name="incount" placeholder="本次入库数量" class="col-xs-10 col-sm-5" value="{$sceneData['incount']|default=''}" />
+                                                                        <else />
+                                                                        <input type="text" id="in_count" name="incount" placeholder="本次入库数量" class="col-xs-10 col-sm-5" />
+                                                                </present>
+                                                        </div>
+                                                </div>  
+                                                <div class="form-group">
+                                                        <label class="col-sm-3 control-label no-padding-right" for="putin_desc"> 入库备注 </label>
+                                                        <div class="col-sm-9">
+                                                                <present name="sceneData">
+                                                                        <textarea  id="category_max" name="desc" placeholder="入库备注" class="col-xs-10 col-sm-5" maxlength="300">{$sceneData['desc']|default=''}</textarea>
+                                                                        <else />                                                
+                                                                        <textarea  id="category_max" name="desc" placeholder="入库备注" class="col-xs-10 col-sm-5" maxlength="300"></textarea>
+                                                                </present>
+                                                        </div>
+                                                </div>
+                                                <div class="clearfix form-actions">
+                                                        <div class="col-md-offset-3 col-md-9">
+                                                                <button class="btn btn-info" id="add_btn" type="button">
+                                                                        <i class="icon-ok bigger-110"></i>
+                                                                        提交入库
+                                                                </button>
+                                                                &nbsp; &nbsp; &nbsp;
+                                                                <button class="btn" id="reset_btn" type="reset">
+                                                                        <i class="icon-undo bigger-110"></i>
+                                                                        重置
+                                                                </button>
+                                                        </div>
+                                                </div>
+                                                <div class="hr hr-24"></div>                                
+<!--                                                <div style="margin: 10px;">                                                
+                                                <present name="putin_div_html">
+                                                        {$putin_div_html|default=''}
+                                                </present>
+                                                </div>-->
+                                                
+                                        </form>
+                                </div>
+                        </div>
+
+                </div>
+                <script type="text/javascript">
+                        window.jQuery || document.write("<script src='/Public/js/wh/jquery-2.0.3.min.js'>" + "<" + "/script>");
+                </script>
+                <!--basic scripts-->
+                <script src="/Public/js/wh/bootstrap.min.js"></script>
+                <!--page specific plugin scripts-->
+                <script src="/Public/js/wh/jquery-ui-1.10.3.custom.min.js"></script>                 
+                <!-- form validate -->
+                <script src="/Public/js/wh/validate.js"></script>
+                <script src="/Public/js/wh/validata_message.js"></script>
+                <script src="/Public/js/wh/validata_metadata.js"></script>
+                <script src="/Public/js/wh/wh.js"></script>
+                <script>
+                        $(document).ready(function () {
+                                <present name="sceneData">
+                                $("#shelf_select").val("{$sceneData['cid']}");
+                                </present>
+                                $("#shelf_select").change(function () {
+                                        var select_id = $(this).val();
+                                        if (select_id != '') {
+                                                $.ajax({
+                                                        type: "POST",
+                                                        url: "getInfoByCid",
+                                                        data: "cid=" + select_id,
+                //                                        async:false,
+                                                        success: function (msg) {
+                                                                if (msg) {
+                                                                        $("#normal_info_div").remove();
+                                                                        $(".form-actions:last").after(msg);
+                                                                } else {
+                                                                        $("div.row").fn_tips("warning", 'exclamation', '获取品类信息失败');
+                                                                }
+                                                        },
+                                                        error: function () {
+                                                                $("div.row").fn_tips("warning", 'exclamation', '获取品类信息失败');
+                                                        }
+                                                });
+                                        }
+                                });
+
+                                $("#add_btn").click(function () {
+                                        $("form:first").submit();
+                                        $("#the_operator").val('');
+                                });
+                                $("#reset_btn").click(function () {
+                                        $("form:first").reset();
+                                });
+                                $("#the_operator").val("admin");
+                                $("#shelf_select").focus();
+                        });
+                        $("#add_normal").validate({
+                //                debug:true,
+                                rules: {
+                                        cid: {
+                                                required: true,
+                                                minlength: 1,
+                                                maxlength: 16
+                                        },
+                                        incount: {
+                                                required: true,
+                                                min: 1,
+                                                max: 10000
+                                        },
+                                        operator:{
+                                                required:true,
+                                                minlength:5
+                                        }
+                                }
+                        });
+                </script>
+        </body>
+</html>

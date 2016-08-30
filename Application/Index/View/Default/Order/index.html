@@ -1,0 +1,383 @@
+<!--<link rel="stylesheet" href="/Public/css/datepicker.css" />-->
+<div class="page-content">
+        <div class="page-header">
+                <h1>
+                        订单列表
+                </h1>
+        </div><!-- /.page-header -->
+
+        <div class="row">
+                <div id="page_content_div" class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <!--<div id="grid-pager1" class='grid-pager-div'></div>-->
+
+                        <table id="grid-table"></table>
+
+                        <div id="grid-pager" class='grid-pager-div'></div>
+
+                        <script type="text/javascript">
+                                var $path_base = "/"; //this will be used in gritter alerts containing images
+                        </script>
+
+                        <!-- PAGE CONTENT ENDS -->
+                </div><!-- /.col -->
+        </div><!-- /.row -->
+</div><!-- /.page-content -->
+
+<div id="products_modal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">订单号：看无</h4>
+      </div>
+        <div class="modal-body no-padding">
+                <table class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
+                        <thead>
+                                <tr>
+                                        <th>ID</th>
+                                        <th>商品编码</th>
+                                        <th>商品名称</th>
+                                        <th>商品数量</th>
+                                        <th>仓储进度</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                        <td>~~也如空空</td>
+                                        <td>,，,，,</td>
+                                        <td>可能请求</td>
+                                        <td>拿不到</td>                                        
+                                        <td>数据</td>                                        
+                                </tr>
+                        </tbody>
+                </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+<!--<script src="/Public/js/bootstrap-datepicker.min.js"></script>-->
+<script src="/Public/js/wh/jqGrid/jquery.jqGrid.min.js"></script>
+<script src="/Public/js/wh/jqGrid/i18n/grid.locale-zh.js"></script>
+<script src="/Public/js/wh/validate.js"></script>
+<script src="/Public/js/wh/validata_message.js"></script>
+<script src="/Public/js/wh/validata_metadata.js"></script>
+<!--<script src="/Public/js/wh/bootbox.min.js"></script>-->
+<script src="/Public/js/wh/whlist.js"></script>
+<script type="text/javascript">
+var validate_rules = {
+        //debug:true,
+        rules:{
+                name:{
+                        required:true,
+                        minlength:1,
+                        maxlength:16
+                },
+                phone:{
+                        required:true,
+                        number:true,
+                        minlength:7,
+                        maxlength:16
+                },
+                province:{
+                        required:true,
+                        minlength:1,
+                        maxlength:16
+                },
+                city:{
+                        required:true,
+                        minlength:1,
+                        maxlength:16
+                },
+                area:{
+                         required:true,
+                         minlength:1,
+                         maxlength:32
+                },
+                street:{
+                        required:true,
+                        minlength:1,
+                        maxlength:128
+                }
+        }
+};
+var grid_selector = "#grid-table";
+var pager_selector = "#grid-pager";
+var fromData = '';
+var paytypeData = '';
+var o_status = '';
+var getSelectData = function (type) {
+        var data = '';
+        if(type == "from" && fromData !== ''){
+                return fromData;
+        }else if(type== "paytype" && paytypeData!==""){
+                return paytypeData;
+        }else if(type=='o_status' && o_status !== ''){
+                return o_status;
+        }
+        $.ajax({
+                type:"post",
+                url: "/Index/Order/getSelectData",
+                data:"type="+type,
+                async: false,
+                success: function (e) {
+                        if (e != null) {
+                               data = e;
+                               if(type=="from"){
+                                       fromData = data;
+                               }else if(type=="paytype"){
+                                       paytypeData = data;
+                               }else if(type == 'o_status'){
+                                       o_status = data;
+                               }
+                        }
+                }
+        });
+        return data;
+};        
+var idFormatter = function(cellvalue,options,rowObject){
+        return "<a href='/Index/Order/products?id="+rowObject.id+"'>"+cellvalue+"</a>";
+        
+}
+var myacFormatter = function(cellvalue,options,rowObject){
+        var detail = '<button style="float:left;margin:3px;" class="btn-xs btn-success" onclick="getOrderProducts('+ rowObject.id + ',' + rowObject.uid + ',\'' + rowObject.orderno + '\')">详情</button>';
+        var cancelBtn = '<button style="float:left;margin:3px;" class="btn-xs btn-danger" onclick="cancelOrder('+ rowObject.id + ',' + rowObject.uid + ',\'' + rowObject.orderno + '\')">取消</button>';
+        if(rowObject.status == 0){
+                return detail+cancelBtn;
+        }
+        return detail;
+};
+var cancelOrder = function (id,uid,orderno){
+  if(confirm("取消后，商品将不会被寄出，确定取消吗")){
+        $.ajax({
+                type:'post',
+                url:"/Index/Order/cancelOrder",
+                data:"id="+id+"&uid="+uid+"&orderno="+orderno,
+                dataType:'json',
+                success:function(res){
+                        if(1 === res.status){
+                                jQuery(grid_selector).jqGrid('setRowData', id, {
+                                      status : 1
+                                });                                
+                                fn_info_tips("success", "ok", res.data,0);
+                        }else{
+                                fn_info_tips("warning", "remove", res.data,0);
+                        }
+                }
+        });
+  }          
+return [true,""];         
+};
+var getOrderProducts = function(id,uid,orderno){
+        $(".ui-widget-overlay").hide();
+        $("#viewmodgrid-table").hide();           
+        $.ajax({
+                type:'post',
+                url:"/Index/Order/getOrderProducts",
+                data:"id="+id+"&uid="+uid,
+                dataType:'json',
+                success:function(res){
+                        if(1 === res.status){
+                             $("#products_modal tbody").html(res.data);  
+                        }
+                }
+        });
+        $(".modal-title").html("订单号："+orderno);
+        $('#products_modal').modal();
+}
+jQuery(function ($) {
+        jQuery(grid_selector).jqGrid({
+                //direction: "rtl",
+                jsonReader: {
+                        root: "rows",
+                        page: "currpage",
+                        total: "totalpages",
+                        records: "totalrecords",
+                        repeatitems: false,
+                        id: "0",
+                        userdata: "userdata"
+
+                },
+                //data: grid_data,
+                mtype: "POST",
+                url: "/Index/Order/getListData",
+                editurl: "/Index/Order/orderOperation",
+                datatype: "json",
+                colNames: ['订单ID','订单号', 'UID','昵称',  '来源', '价格/元', '支付方式', '支付时间', '联系人', '联系方式', '省', '市', '地区','详细地址','快递号','扩展',"状态", '创建时间', '更新时间', '操作'],
+                colModel: [
+                        {name: 'id', index: 'id', width: 60, sortable: true, editable: false,formatter:idFormatter},
+                        {name: 'orderno', index: 'orderno', width: 60, sortable: false, editable: false},
+                        {name: 'uid', index: 'order.uid', width: 60, sortable: true, editable: false},
+                        {name: 'nickname', index: 'nickname', width: 60, sortable: false, editable: false},
+                        {name: 'from', index: 'from', width: 60, sortable: true, editable: false,stype: "select", searchoptions: {value: getSelectData("from")}, edittype: "select", editoptions: {value: getSelectData("from")},formatter:'select'},
+                        {name: 'price', index: 'price', width: 60, sortable: false, editable: false},
+                        {name: 'pay_type', index: 'pay_type', width: 60, sortable: true, editable: false, stype: "select", searchoptions: {value: getSelectData("paytype")}, edittype: "select", editoptions: {value: getSelectData("paytype")},formatter:'select'},
+                        {name: 'paidTime', index: 'paidTime', width: 60, sortable: true, editable: false},
+                        {name: 'name', index: 'name', width: 60, sortable: false, editable: true},
+                        {name: 'phone', index: 'phone', width: 60, sortable: false, editable: true},
+                        {name: 'province', index: 'province', width: 60, sortable: true, editable: true},
+                        {name: 'city', index: 'city', width: 60, sortable: true, editable: true},
+                        {name: 'area', index: 'area', width: 60, sortable: false, editable: true},
+                        {name: 'street', index: 'street', width: 60, sortable: false, editable: true},
+                        {name: 'mailno', index: 'mailno', width: 60, sortable: false, editable: false},
+                        {name: 'ext', index: 'ext', width: 60, editable: false, sortable: false/**,search: false**/},
+                        {name: 'status', index: 'status', width: 60, sortable: false, editable: false, stype: "select", searchoptions: {value: getSelectData("o_status")}, edittype: "select", editoptions: {value: getSelectData("o_status")},formatter:'select'},
+                        {name: 'create_time', index: 'create_time',width: 60, sortable: true, editable: false},
+                        {name: 'update_time', index: 'update_time',width: 60, sortable: true, editable: false},
+                        {name: 'myac', index: '', width: 80, fixed: true, sortable: false, resize: true, search: false,
+                                formatter: myacFormatter,
+                               
+                        }
+                ],
+                viewrecords: true,
+                rowNum: 10,
+                rowList: [10, 20, 30],
+                pager: pager_selector,
+                altRows: true,
+                //toppager: true,
+
+                multiselect: true,
+                //multikey: "ctrlKey",
+                multiboxonly: true,
+                loadComplete : function(res) {
+                        if(res.status == 0){
+                                fn_info_tips("warning", "remove", res.data,0);
+                        }
+                        var table = this;
+                        setTimeout(function () {
+                                styleCheckbox(table);
+                                updateActionIcons(table);
+                                updatePagerIcons(table);
+                                enableTooltips(table);
+                        }, 0);
+                },
+                loadtext: "数据加载中...",
+                caption: "订单列表",
+                autowidth: true,
+                height: "100%"
+        });
+        //enable search/filter toolbar
+        //jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch:true,stringResult:true})
+        //navButtons
+        jQuery(grid_selector).jqGrid('navGrid', pager_selector,
+                {
+                        //navbar options
+                        edit: true,
+                        editicon: 'icon-pencil blue',
+                        add: false,
+                        addicon: 'icon-plus-sign purple',
+                        del: false,
+                        delicon: 'icon-trash red',
+                        search: true,
+                        searchicon: 'icon-search orange',
+                        refresh: true,
+                        refreshicon: 'icon-refresh green',
+                        view: true,
+                        viewicon: 'icon-zoom-in grey',
+                },
+                {
+                        //edit record form
+                        width: 500,
+//                                height:600,
+                        left: ($(window).width() - 500) / 2,
+                        top: ($(window).height()) / 4,
+                        editCaption: "编辑订单",
+                        bSubmit: "保存",
+                        bCancel: "取消",
+                        closeAfterEdit: true,
+                        recreateForm: true,
+                        beforeSubmit:fn_beforeEditSubmit,
+                        afterSubmit: fn_editSubmit,
+                        beforeShowForm: function (e) {
+                                var form = $(e[0]);
+                                form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');
+                                style_edit_form(form,validate_rules);
+                        }
+                },
+                {
+                        //new record form
+                        width: 500,
+//                                height:600,
+                        left: ($(window).width() - 500) / 2,
+                        top: ($(window).height()) / 4,
+                        addCaption: "新增订单",
+                        bSubmit: "保存",
+                        bCancel: "取消",
+                        closeAfterAdd: true,
+                        recreateForm: true,
+                        viewPagerButtons: false,
+                        afterSubmit: fn_addSubmit,
+                        beforeShowForm: function (e) {
+                                var form = $(e[0]);
+                                form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');
+                                style_edit_form(form,validate_rules);
+                        }
+                },
+                {
+                        //delete record form
+                        left: ($(window).width()) / 2,
+                        top: ($(window).height()) / 4,
+                        delCaption: "删除订单",
+                        bSubmit: "删除",
+                        bCancel: "取消",
+                        closeAfterDel: true,
+                        recreateForm: true,
+                        afterSubmit: fn_delSubmit,
+                        beforeShowForm: function (e) {
+                                var form = $(e[0]);
+                                if (form.data('styled'))
+                                        return false;
+                                form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');
+                                style_delete_form(form);
+                                form.data('styled', true);
+                        },
+                        onClick: function (e) {
+                                alert(1);
+                        }
+                },
+                {
+                        //search form
+                        width: 500,
+//                                height:600,
+                        left: ($(window).width() - 500) / 2,
+                        top: ($(window).height()) / 4,
+                        recreateForm: true,
+                        closeAfterSearch: true,
+                        sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'bw', 'bn', 'in', 'ni', 'ew', 'en', 'cn', 'nc'],
+                        afterShowSearch: function (e) {
+                                var form = $(e[0]);
+                                form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />');
+                                style_search_form(form);
+                        },
+                        afterRedraw: function () {
+                                style_search_filters($(this));
+                        },
+                        multipleSearch: true,
+                        /**
+                         multipleGroup:true,
+                         showQuery: true
+                         */
+                },
+                {
+                        //view record form
+                        width: 500,
+//                                height:600,
+                        left: ($(window).width() - 500) / 2,
+                        top: ($(window).height()) / 4,
+                        recreateForm: true,
+                        beforeShowForm: function (e) {
+                                var form = $(e[0]);
+                                form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />');
+                                $("#trv_myac").remove();
+                        },
+                }
+        );
+        //var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');     
+});
+</script>
