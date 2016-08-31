@@ -1,0 +1,48 @@
+<div class="page-content">
+        <div class="page-header position-relative">
+                <h1>解析并获取微信图片</h1>
+        </div>
+
+        <div class="row">
+                <div class="col-xs-12">    
+                        <form id="fetch_form" class="form-horizontal" method="post" role="form" target="_blank" action="/Index/Tools/toFetchPic">                        
+                                <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="anchor_url"> URL：</label>
+
+                                        <div class="col-sm-9">
+                                                <input type="text" id="anchor_url" name="url" placeholder="链接地URL" class="col-xs-10 col-sm-5"/>                                                
+                                        </div>
+                                </div>
+
+
+                                <div class="clearfix form-actions">
+                                        <div class="col-md-offset-3 col-md-9">
+                                                <button class="btn btn-info" id="parse_btn" type="button">
+                                                        <i class="icon-ok bigger-110"></i>
+                                                        解析获取
+                                                </button>
+                                                &nbsp; &nbsp; &nbsp;
+                                                <button class="btn" id="reset_btn" type="reset">
+                                                        <i class="icon-undo bigger-110"></i>
+                                                        重置
+                                                </button>
+                                        </div>
+                                </div>
+                                <div class="hr hr-24"></div>                                
+
+                        </form>
+                </div>
+        </div>
+
+</div>
+<script>
+        $(document).ready(function () {
+                $("#anchor_url").focus();
+                $("#parse_btn").click(function () {
+                        $("#fetch_form").submit();
+                });
+                $("#reset_btn").click(function () {
+                        $("#anchor_url").val("").focus();
+                });
+        });
+</script>
