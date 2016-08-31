@@ -3,7 +3,7 @@
 <html lang="zh">
         <head>
                 <meta charset="utf-8" />
-                <title>微信图片展示</title>
+                <title>微信文章视频链接获取展示</title>
                 <meta name="description"
                       content="starry network" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,20 +27,30 @@
                     <![endif]-->
 
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <style>
+                        .video-div{
+                                margin:30px;
+                        }
+                        .video-div input{
+                                margin-left: 5px;
+                                width: 75%;
+                                height: 30px;
+                        }
+                </style>
         </head>
         <body>
                 <div class="page-content">
                         <div class="page-header position-relative">
-                                <h3>微信图片展示 - {$title}</h3>
+                                <h3>微信文章视频链接展示 - {$title}</h3>
                         </div>
 
                         <div class="row">
                                 <div class="col-xs-12">    
                                         <!-- PAGE CONTENT BEGINS -->
                                         <div class="row-fluid">
-                                                <foreach name="imgs" item="one" key="no">    
-                                                <div class="img-div">
-                                                        <img name="my-imgs" src="{$one}" />
+                                                <foreach name="urls" item="one" key="no">    
+                                                <div class="video-div">
+                                                        <span>视频{$no+1}</span><input type="text" name="wx-video" value="{$one}" />
                                                 </div>
                                                 </foreach>
                                         </div><!-- PAGE CONTENT ENDS -->
@@ -55,11 +65,11 @@
                 <script src="/Public/js/wh/bootstrap.min.js"></script>
                 <!--page specific plugin scripts-->
                 <script src="/Public/js/wh/jquery-ui-1.10.3.custom.min.js"></script>                  
+                <!-- form validate -->
                 <script src="/Public/js/wh/wh.js"></script>
                 <script>
                         $(document).ready(function () {
                         });
-
                 </script>
         </body>
 </html>

@@ -221,17 +221,17 @@ return array(
                 ),
             )
         ),
-//        array(
-//            'title' => '系统设置',
-//            'icon' => 'icon-gear',
-//            'submenu' => array(
-//                array(
-//                    'path' => array('/Index/Sets/index'),
-//                    'url' => '/Index/Sets/index',
-//                    'title' => '所有设置'
-//                ),
-//            )
-//        )
+        array(
+            'title' => '在线工具',
+            'icon' => 'icon-gear',
+            'submenu' => array(
+                array(
+                    'path' => array('/Index/Tools/fetchPic'),
+                    'url' => '/Index/Tools/fetchPic',
+                    'title' => '解析并下载微信图片'
+                ),
+            )
+        )
     ),
     /**
      * show_page_count

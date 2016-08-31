@@ -6,6 +6,7 @@
         <div class="row">
                 <div class="col-xs-12">    
                         <form id="fetch_form" class="form-horizontal" method="post" role="form" target="_blank" action="/Index/Tools/toFetchPic">                        
+                                <input type="hidden" id="submit_type" name="type" value="pic" />
                                 <div class="form-group">
                                         <label class="col-sm-3 control-label no-padding-right" for="anchor_url"> URL：</label>
 
@@ -17,10 +18,15 @@
 
                                 <div class="clearfix form-actions">
                                         <div class="col-md-offset-3 col-md-9">
-                                                <button class="btn btn-info" id="parse_btn" type="button">
+                                                <button class="btn btn-info" id="parse_pic_btn" type="button">
                                                         <i class="icon-ok bigger-110"></i>
-                                                        解析获取
+                                                        获取图片
                                                 </button>
+                                                &nbsp; &nbsp; &nbsp;                                                
+                                                <button class="btn btn-info" id="parse_video_btn" type="button">
+                                                        <i class="icon-ok bigger-110"></i>
+                                                        获取视频URL
+                                                </button>                                                
                                                 &nbsp; &nbsp; &nbsp;
                                                 <button class="btn" id="reset_btn" type="reset">
                                                         <i class="icon-undo bigger-110"></i>
@@ -38,7 +44,12 @@
 <script>
         $(document).ready(function () {
                 $("#anchor_url").focus();
-                $("#parse_btn").click(function () {
+                $("#parse_pic_btn").click(function () {
+                        $("#submit_type").val("pic");
+                        $("#fetch_form").submit();
+                });
+                $("#parse_video_btn").click(function () {
+                        $("#submit_type").val("video");
                         $("#fetch_form").submit();
                 });
                 $("#reset_btn").click(function () {
